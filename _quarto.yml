@@ -1,0 +1,49 @@
+project:
+  type: website
+
+website:
+  title: "{{< fa fish-fins >}} Fish"
+  navbar:
+    left:
+      - href: proposal.qmd
+        text: Proposal
+        icon: files
+      - text: "{{< fa diagram-project >}} Methodology" 
+        menu:
+        - methodology/data_preparation.qmd
+        - methodology/statistical_analysis.qmd
+        - methodology/data_exploration.qmd
+      - href: findings.qmd
+        text: Findings
+        icon: journal-text
+      - href: poster.qmd
+        text: "{{< fa file-powerpoint >}} Poster"
+      - href: meeting_minutes.qmd
+        text: Meeting Minutes
+        icon: archive
+    right:
+      - href: about.qmd
+        text: "{{< fa people-group >}} The Team"
+      - text: "{{< fa laptop-code >}} Shiny App"
+        menu:
+        - href: user_guide.qmd
+          text: User Guide
+        - href: ""
+          text: Shiny App
+          target: _blank
+      - icon: github
+        text: Github
+        menu: 
+        - href: ""
+          text: Project Site
+          target: _blank
+        - href: ""
+          text: Shiny App
+          target: _blank
+format:
+  html:
+    theme: zephyr
+    css: styles.css
+    toc: true
+
+editor: visual
