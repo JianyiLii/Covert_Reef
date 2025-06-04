@@ -34,7 +34,7 @@ website:
       - icon: github
         text: Github
         menu: 
-        - href: ""
+        - href: "https://github.com/JianyiLii/Group_Project-MC3"
           text: Project Site
           target: _blank
         - href: ""
