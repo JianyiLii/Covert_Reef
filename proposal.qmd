@@ -2,8 +2,7 @@
 title: "Project Proposal"
 format:
   html:
-    mermaid: 
-      theme: default
+    theme: default
 ---
 
 # Motivation
@@ -145,7 +144,7 @@ We used the following R packages
 -   [SmartEDA]() - EDA with some graphing
 -   [stringr]() - For wrapping
 -   [readr]() - For reading rectangular data
--   [reactable - For interactive data tables
+-   [reactable]() - For interactive data tables
 
 
 ## Graphing
