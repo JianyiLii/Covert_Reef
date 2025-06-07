@@ -95,6 +95,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<meta name="mermaid-theme" content="default">
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="styles.css">
@@ -199,7 +203,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
   <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a></li>
   <li><a href="#explanation" id="toc-explanation" class="nav-link" data-scroll-target="#explanation">Explanation</a></li>
-  <li><a href="#prototype-sketches" id="toc-prototype-sketches" class="nav-link" data-scroll-target="#prototype-sketches">Prototype Sketches</a></li>
+  <li><a href="#prototype-sketches" id="toc-prototype-sketches" class="nav-link" data-scroll-target="#prototype-sketches">Prototype Sketches</a>
+  <ul class="collapse">
+  <li><a href="#website-look" id="toc-website-look" class="nav-link" data-scroll-target="#website-look"><strong>Website Look</strong></a></li>
+  <li><a href="#shiny-applications-on-networks-and-visualisations" id="toc-shiny-applications-on-networks-and-visualisations" class="nav-link" data-scroll-target="#shiny-applications-on-networks-and-visualisations"><strong>Shiny Applications on Networks and Visualisations</strong></a></li>
+  </ul></li>
   <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages">R Packages</a></li>
   <li><a href="#project-schedule" id="toc-project-schedule" class="nav-link" data-scroll-target="#project-schedule">Project Schedule</a></li>
   </ul>
@@ -233,18 +241,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Objectives</h1>
 <p>This project aims to build interactive visual analytics tools to uncover the story:</p>
 <ol type="1">
-<li>Identifying daily temporal patterns in communication to detect recurring message timings.</li>
-<li>Analysing the shifts in communication patterns across the two weeks.</li>
-<li>Focus on specific entities to determine influence within the network.<br>
-</li>
-<li>Visualising the interactions between people and vessels to explore the interactions and relationships in the knowledge graph.</li>
-<li>Applying community detection to uncover groups that are closely associated with the community and the topic areas predominant for each group.</li>
-<li>Detecting which person or vessel is using pseudonyms and unraveling them.</li>
-<li>Identifying common entities in the knowledge graph.</li>
-<li>Understanding of the activities by unraveling pseudonyms and tracking their interactions.</li>
-<li>Providing evidence through visual analytics to determine whether Nadia Conti is engaging in illicit activity.<br>
-</li>
-<li>Presenting a summary of Nadia’s actions and visual reasoning behind any suspicion.</li>
+<li><p>Identifying daily temporal patterns in communication to detect recurring message timings.</p></li>
+<li><p>Analysing the shifts in communication patterns across the two weeks.</p></li>
+<li><p>Focus on specific entities to determine influence within the network.</p></li>
+<li><p>Visualising the interactions between people and vessels to explore the interactions and relationships in the knowledge graph.</p></li>
+<li><p>Applying community detection to uncover groups that are closely associated with the community and the topic areas predominant for each group.</p></li>
+<li><p>Detecting which person or vessel is using pseudonyms and unraveling them.</p></li>
+<li><p>Identifying common entities in the knowledge graph.</p></li>
+<li><p>Understanding of the activities by unraveling pseudonyms and tracking their interactions.</p></li>
+<li><p>Providing evidence through visual analytics to determine whether Nadia Conti is engaging in illicit activity.</p></li>
+<li><p>Presenting a summary of Nadia’s actions and visual reasoning behind any suspicion.</p></li>
 </ol>
 </section>
 <section id="data" class="level1">
@@ -254,37 +260,85 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="methodology" class="level1">
 <h1>Methodology</h1>
-<p>To answer these questions, we investigated communications and relationships among entities. We did this by creating visualisations such as subgraphs of networks, chord diagrams, timeline plots, wordclouds, and circular bar charts. Then we tabled the findings, and discussion/ interpretations.</p>
+<p>To answer these questions, we investigated communications and relationships among entities. We did this by creating visualisations such as subgraphs of networks, chord diagrams, timeline plots, wordclouds, circular bar charts, and sankey diagrams. Then we tabled the findings, and discussion/ interpretations.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Diagram</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Code</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p><img src="images/Diagram.png" class="img-fluid"></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">%%{
+  init: {
+    'theme': 'default'
+  }
+}%%
+
+flowchart TD
+    A[in:mc3.json] --&gt;|Data Preparation| B(Read Input)
+    B --&gt; C{Clean Data}
+    C --&gt;|Save| E[Knowledge Graph]
+    E --&gt;|Nodes + Edges| D[Extract sub-networks]
+    C --&gt; M[Visualisations]
+    M --&gt; R[Timeseries Plots]
+    M --&gt; S[Chord Diagrams]
+    M --&gt; T[Alluvial Diagrams]
+    M --&gt; U[Wordclouds]
+    U --&gt; V[Circular Barcharts]
+    V --&gt; Z[Shiny App]
+    T --&gt; Z[Shiny App]
+    S --&gt; Z[Shiny App]
+    R --&gt; Z[Shiny App]
+
+    D --&gt; F[Ego Network]
+    D --&gt;|Louvian| G[Commumity Network]
+    D --&gt;|PageRank| G[Commumity Network]
+    D --&gt; H[2-hop Network]
+    F --&gt; Z[Shiny App]
+    G --&gt; Z[Shiny App]
+    H --&gt; Z[Shiny App]
+</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p>flowchart TD</p>
-<pre><code>A[in:mc3.json] --&gt;|Data Preparation| B(Read Input) 
-B --&gt; C{Clean Data} 
-C --&gt;|Save| E[Knowledge Graph] 
-E --&gt;|Nodes + Edges| D[Extract sub-networks] 
-C --&gt; M[Visualisations] 
-M --&gt; R[Timeseries Plots] 
-M --&gt; S[Chord Diagrams] 
-M --&gt; T[Alluvial Diagrams] 
-M --&gt; U[Wordclouds] 
-U --&gt; V[Circular Barcharts] 
-V --&gt; Z[Shiny App] 
-T --&gt; Z[Shiny App] 
-S --&gt; Z[Shiny App] 
-R --&gt; Z[Shiny App] 
-
-D --&gt; F[Ego Network] 
-D --&gt;|Louvian| G[Commumity Network] 
-D --&gt;|PageRank| G[Commumity Network] 
-D --&gt; H[2-hop Network] 
-F --&gt; Z[Shiny App] 
-G --&gt; Z[Shiny App] 
-H --&gt; Z[Shiny App] </code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>%%{</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  init: {</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    'theme': 'base',</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    'themeVariables': {</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}%%</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>flowchart TD</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  A<span class="co">[</span><span class="ot">in:mc3.json</span><span class="co">]</span> --&gt;|Data Preparation| B(Read Input) </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  B --&gt; C{Clean Data} </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  C --&gt;|Save| E<span class="co">[</span><span class="ot">Knowledge Graph</span><span class="co">]</span> </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  E --&gt;|Nodes + Edges| D<span class="co">[</span><span class="ot">Extract sub-networks</span><span class="co">]</span> </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  C --&gt; M<span class="co">[</span><span class="ot">Visualisations</span><span class="co">]</span> </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  M --&gt; R<span class="co">[</span><span class="ot">Timeseries Plots</span><span class="co">]</span> </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  M --&gt; S<span class="co">[</span><span class="ot">Chord Diagrams</span><span class="co">]</span> </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  M --&gt; T<span class="co">[</span><span class="ot">Alluvial Diagrams</span><span class="co">]</span> </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  M --&gt; U<span class="co">[</span><span class="ot">Wordclouds</span><span class="co">]</span> </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  U --&gt; V<span class="co">[</span><span class="ot">Circular Barcharts</span><span class="co">]</span> </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  V --&gt; Z<span class="co">[</span><span class="ot">Shiny App</span><span class="co">]</span> </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  T --&gt; Z<span class="co">[</span><span class="ot">Shiny App</span><span class="co">]</span> </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  S --&gt; Z<span class="co">[</span><span class="ot">Shiny App</span><span class="co">]</span> </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  R --&gt; Z<span class="co">[</span><span class="ot">Shiny App</span><span class="co">]</span> </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  D --&gt; F<span class="co">[</span><span class="ot">Ego Network</span><span class="co">]</span> </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  D --&gt;|Louvain| G<span class="co">[</span><span class="ot">Community Network</span><span class="co">]</span> </span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  D --&gt;|PageRank| G<span class="co">[</span><span class="ot">Community Network</span><span class="co">]</span> </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  D --&gt; H<span class="co">[</span><span class="ot">2-hop Network</span><span class="co">]</span> </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  F --&gt; Z<span class="co">[</span><span class="ot">Shiny App</span><span class="co">]</span> </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  G --&gt; Z<span class="co">[</span><span class="ot">Shiny App</span><span class="co">]</span> </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  H --&gt; Z<span class="co">[</span><span class="ot">Shiny App</span><span class="co">]</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -292,22 +346,30 @@ H --&gt; Z[Shiny App] </code></pre>
 <section id="explanation" class="level1">
 <h1>Explanation</h1>
 <ol type="1">
-<li>Data Preparation: Cleaning data to what is required for analysis.
+<li><p>Data Preparation: Cleaning data to what is required for analysis.</p>
 <ol type="a">
-<li>Cleaning nodes and edges</li>
-<li>Linking sender and recipient information.</li>
+<li>Cleaning and building nodes</li>
+<li>Cleaning and building sender and recipient information as edges.</li>
+<li>Linking Event + subtype of Communications with content</li>
+<li>Linking Event + subtype of Monitoring with findings</li>
+<li>Linking Event + subtype of VesselMovements with destination</li>
+<li>Linking Event + subtype of Assessment with results</li>
+<li>Linking Relationship and subtype of Coordinates with coordinate_type</li>
+<li>Linking Relationship and subtype of Operates with operational_type</li>
+<li>Linking Relationship and subtype of Jurisdiction with jurisdiction_type</li>
 </ol></li>
-<li>Statistical Analysis: To apply statistical methods to help in analysis
+<li><p>Statistical Analysis: To apply statistical methods to help in analysis</p>
 <ol type="a">
 <li>Perform Louvain Community Detection</li>
 <li>Calculate measures of centrality to identify influential nodes
 <ol type="i">
-<li>pagerank centrality for the nodes that hold the most influence</li>
+<li>PageRank centrality for the nodes that hold the most influence</li>
 </ol></li>
+<li>Combine Louvain Community Detection with PageRank centrality</li>
 </ol></li>
-<li>Data Exploration &amp; Visualization: To identify patterns in the network and derive inferences from them.
+<li><p>Data Exploration &amp; Visualization: To identify patterns and trends in the network and derive inferences from them.</p>
 <ol type="a">
-<li>Interactive network graphs to see relationship between entities</li>
+<li>Interactive network knowledge graphs, subgraphs, and visualisations to view relationships between entities</li>
 <li>Shiny app for users to interact and change parameters for analysis
 <ol type="i">
 <li>A time slider will be provided to easily see how the network changes through time</li>
@@ -316,14 +378,22 @@ H --&gt; Z[Shiny App] </code></pre>
 <ol type="i">
 <li>Communications</li>
 <li>Pseudonyms and Real Identities</li>
+<li>Communities</li>
+<li>Extend of Events</li>
 </ol></li>
 </ol></li>
 </ol>
 </section>
 <section id="prototype-sketches" class="level1">
 <h1>Prototype Sketches</h1>
-<p><img src="images/prototype.jpg" class="img-fluid"></p>
 <p>Our shiny app will look at network and temporal patterns, with the network graph as the core visualizations, with other tables and charts as accompanying visualization.</p>
+<section id="website-look" class="level2">
+<h2 class="anchored" data-anchor-id="website-look"><strong>Website Look</strong></h2>
+<p><img src="images/Screenshot 2025-06-07 202656.png" class="img-fluid"></p>
+</section>
+<section id="shiny-applications-on-networks-and-visualisations" class="level2">
+<h2 class="anchored" data-anchor-id="shiny-applications-on-networks-and-visualisations"><strong>Shiny Applications on Networks and Visualisations</strong></h2>
+<p><img src="images/Screenshot 2025-06-07 204450.png" class="img-fluid"></p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Inputs</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Outputs</a></li></ul>
 <div class="tab-content">
@@ -345,11 +415,13 @@ H --&gt; Z[Shiny App] </code></pre>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <section id="plot-area" class="level3">
 <h3 class="anchored" data-anchor-id="plot-area">Plot area</h3>
-<p>Shows the network plot. It will be interactive to enable closer inspection of network elements.</p>
+<p>Shows the network or visualisation plot. It will be interactive to enable closer inspection of network or visual elements.</p>
 </section>
 </div>
 </div>
 </div>
+<p>These are some prototypes of the webpage and shiny application that we are planning to build for the project. The whole concept of this storyboard is mainly to allow the user to utilise interactive visualisations such as timeseries slides, clickable components, or hovers to get to the bottom of the activites brewing at Oceanus such as the Nemo Reef Operation. Hence, enhancing the whole user experience as they follow us along on uncovering the story.</p>
+</section>
 </section>
 <section id="r-packages" class="level1">
 <h1>R Packages</h1>
@@ -367,13 +439,10 @@ H --&gt; Z[Shiny App] </code></pre>
 <li><p><a href="">hms</a> - For durations</p></li>
 <li><p><a href="">scales</a> - For breaks and labels</p></li>
 <li><p><a href="">tidytext</a> - For functions text mining</p></li>
-<li><p><a href="">dplyr</a> - For transforming, filtering, summarising data</p></li>
 <li><p><a href="">tm</a> - For text mining</p></li>
 <li><p><a href="">SnowBallC</a> - For Porter’s word stemming</p></li>
 <li><p><a href="">magick</a> - For graphics and image processing</p></li>
 <li><p><a href="">SmartEDA</a> - EDA with some graphing</p></li>
-<li><p><a href="">stringr</a> - For wrapping</p></li>
-<li><p><a href="">readr</a> - For reading rectangular data</p></li>
 <li><p><a href="">reactable</a> - For interactive data tables</p></li>
 </ul>
 </div>
@@ -430,10 +499,24 @@ H --&gt; Z[Shiny App] </code></pre>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">gg_vistime</span>(data, <span class="at">title =</span> <span class="st">"Project Timeline"</span>)</span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.numeric</span>(<span class="fu">as.POSIXct</span>(<span class="st">"2025-06-08"</span>)), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.numeric</span>(<span class="fu">as.POSIXct</span>(<span class="st">"2025-06-08"</span>)), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_datetime</span>(<span class="at">date_breaks =</span> <span class="st">"3 days"</span>, </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                   <span class="at">date_labels =</span> <span class="st">"%d %b"</span>,</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.06</span>, <span class="fl">0.08</span>))  <span class="co"># adds space</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),            <span class="co"># Centered title</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey80"</span>, <span class="at">size =</span> <span class="fl">0.3</span>),  <span class="co"># vertical grid</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="fl">0.3</span>),  <span class="co"># horizontal grid</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="fl">0.2</span>),</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">color =</span> <span class="st">"grey70"</span>, <span class="at">size =</span> <span class="fl">0.5</span>),  <span class="co"># border</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">color =</span> <span class="cn">NA</span>)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="proposal_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+<p><img src="proposal_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 
