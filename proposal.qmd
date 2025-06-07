@@ -17,7 +17,7 @@ This project aims to build interactive visual analytics tools to uncover the sto
 
 2.  Analysing the shifts in communication patterns across the two weeks.
 
-3.  Focus on specific entities to determine influence within the network.\
+3.  Focus on specific entities to determine influence within the network.
 
 4.  Visualising the interactions between people and vessels to explore the interactions and relationships in the knowledge graph.
 
@@ -29,7 +29,7 @@ This project aims to build interactive visual analytics tools to uncover the sto
 
 8.  Understanding of the activities by unraveling pseudonyms and tracking their interactions.
 
-9.  Providing evidence through visual analytics to determine whether Nadia Conti is engaging in illicit activity.\
+9.  Providing evidence through visual analytics to determine whether Nadia Conti is engaging in illicit activity.
 
 10. Presenting a summary of Nadia’s actions and visual reasoning behind any suspicion.
 
@@ -155,9 +155,15 @@ flowchart TD
 
 # Prototype Sketches
 
-
-
 Our shiny app will look at network and temporal patterns, with the network graph as the core visualizations, with other tables and charts as accompanying visualization.
+
+## **Website Look**
+
+![](images/Screenshot%202025-06-07%20202656.png)
+
+## **Shiny Applications on Networks and Visualisations**
+
+![](images/Screenshot%202025-06-07%20204450.png)
 
 ::: panel-tabset
 ## Inputs
@@ -182,6 +188,8 @@ In relation to the reference node, this serves to narrow down the network to vie
 
 Shows the network plot. It will be interactive to enable closer inspection of network elements.
 :::
+
+These are some prototypes of the webpage and shiny application that we are planning to build for the project. The whole concept of this storyboard is mainly to allow the user to utilise interactive visualisations such as timeseries slides, clickable components, or hovers to get to the bottom of the activites brewing at Oceanus such as the Nemo Reef Operation. Hence, enhancing the whole user experience as they follow us along on uncovering the story.
 
 # R Packages
 
