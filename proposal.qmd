@@ -42,83 +42,40 @@ Nodes are one of three types: Entity, Event, Relationship. Entities are connecte
 
 # Methodology
 
-To answer these questions, we investigated communications and relationships among entities. We did this by creating visualisations such as subgraphs of networks, chord diagrams, timeline plots, wordclouds, circular bar charts, and sankey diagrams. Then we tabled the findings, and discussion/ interpretations.
+To answer these questions, we investigated communications and relationships among entities. We did this by creating visualisations such as subgraphs of networks, chord diagrams, timeline plots, wordclouds, and circular bar charts. Then we tabled the findings, and discussion/ interpretations.
 
 ::: panel-tabset
 ## Diagram
 
-```{mermaid}
-
-%%| echo: false
-
-%%{
-  init: {
-    'theme': 'base',
-    'themeVariables': {
-    }
-  }
-}%%
-
-flowchart TD
-  A[in:mc3.json] -->|Data Preparation| B(Read Input) 
-  B --> C{Clean Data} 
-  C -->|Save| E[Knowledge Graph] 
-  E -->|Nodes + Edges| D[Extract sub-networks] 
-  C --> M[Visualisations] 
-  M --> R[Timeseries Plots] 
-  M --> S[Chord Diagrams] 
-  M --> T[Alluvial Diagrams] 
-  M --> U[Wordclouds] 
-  U --> V[Circular Barcharts] 
-  V --> Z[Shiny App] 
-  T --> Z[Shiny App] 
-  S --> Z[Shiny App] 
-  R --> Z[Shiny App] 
-  
-  D --> F[Ego Network] 
-  D -->|Louvain| G[Community Network] 
-  D -->|PageRank| G[Community Network] 
-  D --> H[2-hop Network] 
-  F --> Z[Shiny App] 
-  G --> Z[Shiny App] 
-  H --> Z[Shiny App] 
-```
+![](images/Diagram.png)
 
 ## Code
 
-```{markdown}
-
-%%{
-  init: {
-    'theme': 'base',
-    'themeVariables': {
-    }
-  }
-}%%
-
 flowchart TD
-  A[in:mc3.json] -->|Data Preparation| B(Read Input) 
-  B --> C{Clean Data} 
-  C -->|Save| E[Knowledge Graph] 
-  E -->|Nodes + Edges| D[Extract sub-networks] 
-  C --> M[Visualisations] 
-  M --> R[Timeseries Plots] 
-  M --> S[Chord Diagrams] 
-  M --> T[Alluvial Diagrams] 
-  M --> U[Wordclouds] 
-  U --> V[Circular Barcharts] 
-  V --> Z[Shiny App] 
-  T --> Z[Shiny App] 
-  S --> Z[Shiny App] 
-  R --> Z[Shiny App] 
-  
-  D --> F[Ego Network] 
-  D -->|Louvain| G[Community Network] 
-  D -->|PageRank| G[Community Network] 
-  D --> H[2-hop Network] 
-  F --> Z[Shiny App] 
-  G --> Z[Shiny App] 
-  H --> Z[Shiny App] 
+
+```         
+A[in:mc3.json] -->|Data Preparation| B(Read Input) 
+B --> C{Clean Data} 
+C -->|Save| E[Knowledge Graph] 
+E -->|Nodes + Edges| D[Extract sub-networks] 
+C --> M[Visualisations] 
+M --> R[Timeseries Plots] 
+M --> S[Chord Diagrams] 
+M --> T[Alluvial Diagrams] 
+M --> U[Wordclouds] 
+U --> V[Circular Barcharts] 
+V --> Z[Shiny App] 
+T --> Z[Shiny App] 
+S --> Z[Shiny App] 
+R --> Z[Shiny App] 
+
+D --> F[Ego Network] 
+D -->|Louvian| G[Commumity Network] 
+D -->|PageRank| G[Commumity Network] 
+D --> H[2-hop Network] 
+F --> Z[Shiny App] 
+G --> Z[Shiny App] 
+H --> Z[Shiny App] 
 ```
 :::
 
@@ -126,38 +83,27 @@ flowchart TD
 
 1.  Data Preparation: Cleaning data to what is required for analysis.
 
-    a.  Cleaning and building nodes
-    b.  Cleaning and building sender and recipient information as edges.
-    c.  Linking Event + subtype of Communications with content
-    d.  Linking Event + subtype of Monitoring with findings
-    e.  Linking Event + subtype of VesselMovelemts with destination
-    f.  Linking Event + subtype of Assessment with results
-    g.  Linking Relationship and subtupe of Coordinates with coordiante_type
-    h.  Linking Relationship and subtupe of Operates with operational_type
-    i.  Linking Relationship and subtupe of Jurisdiction with jurisdiction_type
+    a.  Cleaning nodes and edges
+    b.  Linking sender and recipient information.
 
 2.  Statistical Analysis: To apply statistical methods to help in analysis
 
     a.  Perform Louvain Community Detection
     b.  Calculate measures of centrality to identify influential nodes
-        i.  PageRank centrality for the nodes that hold the most influence
-    c.  Combine Louvain with PageRank centrality
+        i.  pagerank centrality for the nodes that hold the most influence
 
-3.  Data Exploration & Visualization: To identify patterns and trends in the network and derive inferences from them.
+3.  Data Exploration & Visualization: To identify patterns in the network and derive inferences from them.
 
-    a.  Interactive network knowledge graphs, subgraphs, and visualisations to view relationships between entities
+    a.  Interactive network graphs to see relationship between entities
     b.  Shiny app for users to interact and change parameters for analysis
         i.  A time slider will be provided to easily see how the network changes through time
     c.  By looking at various network structures, identify the following:
         i.  Communications
         ii. Pseudonyms and Real Identities
-        iii. Communities
-        iv. Extend of Events
 
 # Prototype Sketches
 
 ![](images/prototype.jpg)
-
 
 Our shiny app will look at network and temporal patterns, with the network graph as the core visualizations, with other tables and charts as accompanying visualization.
 
@@ -208,6 +154,8 @@ We used the following R packages
 
 -   [tidytext]() - For functions text mining
 
+-   [dplyr]() - For transforming, filtering, summarising data
+
 -   [tm]() - For text mining
 
 -   [SnowBallC]() - For Porter’s word stemming
@@ -215,6 +163,10 @@ We used the following R packages
 -   [magick]() - For graphics and image processing
 
 -   [SmartEDA]() - EDA with some graphing
+
+-   [stringr]() - For wrapping
+
+-   [readr]() - For reading rectangular data
 
 -   [reactable]() - For interactive data tables
 
@@ -284,20 +236,5 @@ proposal_deadline <- as.Date("2025-06-08")
 
 p <- gg_vistime(data, title = "Project Timeline")
 p +
-  geom_vline(xintercept = as.numeric(as.POSIXct("2025-06-08")), color = "red", size = 1)+
-  scale_x_datetime(date_breaks = "3 days", 
-                   date_labels = "%d %b",
-                  expand = expansion(mult = c(0.06, 0.08))  # adds space
-) +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(hjust = 0.5),            # Centered title
-    axis.text.x = element_text(angle = 45, hjust = 1),
-    panel.grid.major.x = element_line(color = "grey80", size = 0.3),  # vertical grid
-    panel.grid.major.y = element_line(color = "white", size = 0.3),  # horizontal grid
-    panel.grid.minor = element_line(color = "white", size = 0.2),
-    panel.background = element_rect(fill = "white", color = "grey70", size = 0.5),  # border
-    plot.background = element_rect(fill = "white", color = NA)
-  )
-
+  geom_vline(xintercept = as.numeric(as.POSIXct("2025-06-08")), color = "red", size = 1)
 ```
