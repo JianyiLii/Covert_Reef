@@ -1,8 +1,5 @@
 ---
 title: "Meeting Minutes"
-format:
-  html:
-    theme: journal
 ---
 
 # **ISSS608 Group 2 Meeting Minutes**
