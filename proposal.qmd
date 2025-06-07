@@ -129,18 +129,18 @@ flowchart TD
     b.  Cleaning and building sender and recipient information as edges.
     c.  Linking Event + subtype of Communications with content
     d.  Linking Event + subtype of Monitoring with findings
-    e.  Linking Event + subtype of VesselMovelemts with destination
+    e.  Linking Event + subtype of VesselMovements with destination
     f.  Linking Event + subtype of Assessment with results
-    g.  Linking Relationship and subtupe of Coordinates with coordiante_type
-    h.  Linking Relationship and subtupe of Operates with operational_type
-    i.  Linking Relationship and subtupe of Jurisdiction with jurisdiction_type
+    g.  Linking Relationship and subtype of Coordinates with coordinate_type
+    h.  Linking Relationship and subtype of Operates with operational_type
+    i.  Linking Relationship and subtype of Jurisdiction with jurisdiction_type
 
 2.  Statistical Analysis: To apply statistical methods to help in analysis
 
     a.  Perform Louvain Community Detection
     b.  Calculate measures of centrality to identify influential nodes
         i.  PageRank centrality for the nodes that hold the most influence
-    c.  Combine Louvain with PageRank centrality
+    c.  Combine Louvain Community Detection with PageRank centrality
 
 3.  Data Exploration & Visualization: To identify patterns and trends in the network and derive inferences from them.
 
