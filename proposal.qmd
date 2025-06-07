@@ -2,7 +2,8 @@
 title: "Project Proposal"
 format:
   html:
-    theme: journal
+    mermaid: 
+      theme: default
 ---
 
 # Motivation
@@ -47,77 +48,69 @@ To answer these questions, we investigated communications and relationships amon
 ## Diagram
 
 ```{mermaid}
-
-%%| echo: false
-
 %%{
   init: {
-    'theme': 'base',
-    'themeVariables': {
-    }
+    'theme': 'default'
   }
 }%%
 
 flowchart TD
-  A[in:mc3.json] -->|Data Preparation| B(Read Input) 
-  B --> C{Clean Data} 
-  C -->|Save| E[Knowledge Graph] 
-  E -->|Nodes + Edges| D[Extract sub-networks] 
-  C --> M[Visualisations] 
-  M --> R[Timeseries Plots] 
-  M --> S[Chord Diagrams] 
-  M --> T[Alluvial Diagrams] 
-  M --> U[Wordclouds] 
-  U --> V[Circular Barcharts] 
-  V --> Z[Shiny App] 
-  T --> Z[Shiny App] 
-  S --> Z[Shiny App] 
-  R --> Z[Shiny App] 
-  
-  D --> F[Ego Network] 
-  D -->|Louvain| G[Community Network] 
-  D -->|PageRank| G[Community Network] 
-  D --> H[2-hop Network] 
-  F --> Z[Shiny App] 
-  G --> Z[Shiny App] 
-  H --> Z[Shiny App] 
+    A[in:mc3.json] -->|Data Preparation| B(Read Input)
+    B --> C{Clean Data}
+    C -->|Save| E[Knowledge Graph]
+    E -->|Nodes + Edges| D[Extract sub-networks]
+    C --> M[Visualisations]
+    M --> R[Timeseries Plots]
+    M --> S[Chord Diagrams]
+    M --> T[Alluvial Diagrams]
+    M --> U[Wordclouds]
+    U --> V[Circular Barcharts]
+    V --> Z[Shiny App]
+    T --> Z[Shiny App]
+    S --> Z[Shiny App]
+    R --> Z[Shiny App]
+
+    D --> F[Ego Network]
+    D -->|Louvian| G[Commumity Network]
+    D -->|PageRank| G[Commumity Network]
+    D --> H[2-hop Network]
+    F --> Z[Shiny App]
+    G --> Z[Shiny App]
+    H --> Z[Shiny App]
 ```
 
 ## Code
 
 ```{markdown}
-
 %%{
   init: {
-    'theme': 'base',
-    'themeVariables': {
-    }
+    'theme': 'default'
   }
 }%%
 
 flowchart TD
-  A[in:mc3.json] -->|Data Preparation| B(Read Input) 
-  B --> C{Clean Data} 
-  C -->|Save| E[Knowledge Graph] 
-  E -->|Nodes + Edges| D[Extract sub-networks] 
-  C --> M[Visualisations] 
-  M --> R[Timeseries Plots] 
-  M --> S[Chord Diagrams] 
-  M --> T[Alluvial Diagrams] 
-  M --> U[Wordclouds] 
-  U --> V[Circular Barcharts] 
-  V --> Z[Shiny App] 
-  T --> Z[Shiny App] 
-  S --> Z[Shiny App] 
-  R --> Z[Shiny App] 
-  
-  D --> F[Ego Network] 
-  D -->|Louvain| G[Community Network] 
-  D -->|PageRank| G[Community Network] 
-  D --> H[2-hop Network] 
-  F --> Z[Shiny App] 
-  G --> Z[Shiny App] 
-  H --> Z[Shiny App] 
+    A[in:mc3.json] -->|Data Preparation| B(Read Input)
+    B --> C{Clean Data}
+    C -->|Save| E[Knowledge Graph]
+    E -->|Nodes + Edges| D[Extract sub-networks]
+    C --> M[Visualisations]
+    M --> R[Timeseries Plots]
+    M --> S[Chord Diagrams]
+    M --> T[Alluvial Diagrams]
+    M --> U[Wordclouds]
+    U --> V[Circular Barcharts]
+    V --> Z[Shiny App]
+    T --> Z[Shiny App]
+    S --> Z[Shiny App]
+    R --> Z[Shiny App]
+
+    D --> F[Ego Network]
+    D -->|Louvian| G[Commumity Network]
+    D -->|PageRank| G[Commumity Network]
+    D --> H[2-hop Network]
+    F --> Z[Shiny App]
+    G --> Z[Shiny App]
+    H --> Z[Shiny App]
 ```
 :::
 
