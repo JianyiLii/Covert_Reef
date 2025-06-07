@@ -2,7 +2,8 @@
 title: "Project Proposal"
 format:
   html:
-    theme: default
+    mermaid: 
+      theme: default
 ---
 
 # Motivation
