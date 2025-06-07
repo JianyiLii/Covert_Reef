@@ -144,3 +144,79 @@ format:
 -   Shared Netlify site under group account
 
 -   GitHub repo link for group deliverable (proposal, poster, minutes).
+
+## **Project Meeting 5**
+
+**Date:** 23/06/2025 
+
+**Time:** 8.00PM - 9:30 PM 
+
+**In Attendance:** Li Jianyi, Yang Lu, Audrey 
+
+**Agenda Items**
+
+1.  Harmonization of data variables and nomenclature
+
+2.  Website architecture and content framework
+
+3.  Work distribution and consolidation approach
+
+4.  Interactive vs static visualization deployment strategy
+
+**Agenda Item 1: Harmonization of data variables and nomenclature**
+
+-   **Issue Identified:** Inconsistent variable naming across individual team contributions creating merge conflicts
+
+<!-- -->
+
+-   **Resolution:** Establish unified naming standards for all data objects and variables prior to code integration
+
+<!-- -->
+
+-   **Implementation:** Conduct comprehensive review to synchronize nomenclature across all team member submissions
+
+**Agenda Item 2: Website architecture and content framework**
+
+-   **Data Preparation Section**: Decided to create a unified data preparation section combining all team members' preprocessing work
+
+-   **Methodology vs Findings**: Clarified that methodology should cover overall approach, while findings will contain question-specific analyses
+
+-   **Content Strategy:**
+
+    -   Copy and paste shared components (packages, introduction, data preparation)
+
+    -   Combine individual question analyses under findings section
+
+    -   Maintain consistent formatting across all sections
+
+**Agenda Item 3: Work distribution and consolidation approach**
+
+**Analysis 1:** Primary implementation using Yang Lu's temporal heat map visualization, supplemented by Audrey's community structure analysis
+
+**Analysis 2:**
+
+-    **Component A:** Deploy Audrey's community detection visualizations (reference sections 7.5.8 through 7.5.11)
+
+-    **Component B:** Incorporate Li Jianyi's network metrics including betweenness centrality calculations
+
+-    **Integration:** Merge Audrey's visual community mapping with Jianyi's quantitative connectivity analysis (degree and betweenness centrality measures)
+
+**Analysis 3:** Synthesize findings from Analyses 2A&B with 3A investigation, utilizing Audrey's Interactive Alluvial Diagrams as analytical foundation while ensuring coherence across related questions
+
+**Analysis 4:** Maintain existing individual response with team validation
+
+**Agenda Item 4:** **Interactive vs static visualization deployment strategy**
+
+-   **Technical Constraint:** Shiny applications offer superior user interaction but lack direct Netlify compatibility
+
+<!-- -->
+
+-   **Hybrid Approach:**
+
+    -    Preserve Shiny implementations for enhanced demonstration capabilities
+
+    -    Develop static alternatives optimized for Netlify integration
+
+<!-- -->
+
+-   **Development Priority:** Emphasize functional delivery over visual sophistication for web deployment
