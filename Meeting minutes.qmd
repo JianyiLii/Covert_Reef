@@ -11,7 +11,7 @@ format:
 
 **Date:** 15/05/2025 
 
-**Time:** 7:30 - 8:00PM 
+**Time:** 7:30 - 8:00 PM
 
 **In Attendance:** Li Jianyi, Yang Lu 
 
@@ -61,7 +61,7 @@ format:
 
 **Agenda Item 1: Sharing our work progress** 
 
--   Yang Lu completing Question 1. Audrey completing Questions 2 and 4.  
+-   Yang Lu is completing Question 1. Audrey is completing Questions 2 and 4.  
 
 <!-- -->
 
