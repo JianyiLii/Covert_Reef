@@ -1,0 +1,146 @@
+---
+title: "Meeting Minutes"
+format:
+  html:
+    theme: journal
+---
+
+# **ISSS608 Group 2 Meeting Minutes**
+
+## **Project Meeting 1**
+
+**Date:** 15/05/2025 
+
+**Time:** 7:30 - 8:00PM 
+
+**In Attendance:** Li Jianyi, Yang Lu 
+
+**Agenda Items** 
+
+1.  Discussion on project topic 
+
+<!-- -->
+
+2.  Action items 
+
+**Agenda Item 1: Discussion on project topic** 
+
+-   Prior to the meeting, the team read the different challenges from [VAST Challenge 2025](https://ieeevis.org/year/2025/welcome) to select our respective preferences.  
+
+<!-- -->
+
+-   The team disagreed to do the challenge as Yang Lu prefers [MC2](https://vast-challenge.github.io/2025/MC2.html), while Li JianYi prefers [MC3](https://vast-challenge.github.io/2024/MC3.html). 
+
+<!-- -->
+
+-   The team agreed on [MC3](https://vast-challenge.github.io/2025/MC3.html) as we thought that through the challenge, we could utilise what we have learned in class and add more insights from our own current knowledge bank. 
+
+<!-- -->
+
+-   The team also informed Audrey on the team’s choice of MC3 as she mentioned she was fine with any topic since she was on medical leave. 
+
+**Action Items** 
+
+-   All members will revisit the MC3 document to identify any gaps in understanding the knowledge graph’s structure and content. 
+
+## **Project Meeting 2** 
+
+**Date:** 24/05/2025 
+
+**Time:** 3.45 - 4:15 PM 
+
+**In Attendance:** Li Jianyi, Yang Lu, Audrey 
+
+**Agenda Items** 
+
+1.  Sharing our work progress for MC3 
+
+<!-- -->
+
+2.  Division of tasks for Project Proposal 
+
+**Agenda Item 1: Sharing our work progress** 
+
+-   Yang Lu completing Question 1. Audrey completing Questions 2 and 4.  
+
+<!-- -->
+
+-   Jianyi will work on Question 3 and attempt other Questions if he has the time.  
+
+**Agenda Item 2: Division of tasks for the project.** 
+
+-   The team agreed to complete their assigned questions and attempt to complete other questions as much as possible if they have the time. 
+
+<!-- -->
+
+-   The team will refer to the project requirements and seniors’ work for references.
+
+## **Project Meeting 3** 
+
+**Date:** 02/06/2025 
+
+**Time:** 8.00 - 8:30 PM 
+
+**In Attendance:** Li Jianyi, Yang Lu, Audrey 
+
+**Agenda Items** 
+
+1.  Division of tasks for the project. 
+
+<!-- -->
+
+2.  Action items 
+
+**Agenda Item 1: Division of tasks for Project** 
+
+-   We decided to focus on the most urgent component, which was the project proposal due on **8 June 2025**.  
+
+<!-- -->
+
+-   Jianyi will cover the Shiny and Netlify setup. 
+
+<!-- -->
+
+-   Yang Lu and Audrey will cover the Meeting Minutes and Project Proposal. 
+
+**Agenda Item 2: Action Items** 
+
+-   Jianyi will help the team to push the Project Proposal to GitHub after Yang Lu and Audrey finish the Meeting Minutes and Project Proposal. 
+
+## **Project Meeting 4**
+
+**Date:** 07/06/2025 
+
+**Time:** 2.45 - 4:35 PM 
+
+**In Attendance:** Li Jianyi, Yang Lu, Audrey 
+
+**Agenda Items**
+
+1.  UI storyboard template and format
+
+2.  The distinction between Take-home Exercise 3 and the group project deliverable
+
+3.  GitHub branching & collaboration workflow
+
+**Agenda Item 1: UI Storyboard Template & Format**
+
+**Template Style**
+
+-   Adopt a clean “dark-blue” or similar professional colour palette to be consistent with the theme of the project.
+
+-   Use consistent title headers, footers, and navigation bar mock-ups.
+
+-   Print-screen of each implemented UI page
+
+-   Capture one overall shot of each primary view in the app, such as the homepage, the detail page, and the filter/control panel, so the storyboard illustrates the full user journey.
+
+**Agenda Item 2: Distinction Group Project Website (Covert Reef)**
+
+-   Static homepage summarizing group methodology, team introduction and proposal.
+
+-   May include embedded visuals, but not required to be Shiny.
+
+-   Shared Netlify site under group account
+
+-   GitHub repo link for group deliverable (proposal, poster, minutes).
