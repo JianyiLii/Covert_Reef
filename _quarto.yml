@@ -10,9 +10,9 @@ website:
         icon: files
       - text: "{{< fa diagram-project >}} Methodology" 
         menu:
-        - methodology/data_preparation.qmd
-        - methodology/statistical_analysis.qmd
-        - methodology/data_exploration.qmd
+        - methodology/1.qmd
+        - methodology/2.qmd
+        - methodology/3.qmd
       - href: findings.qmd
         text: Findings
         icon: journal-text
