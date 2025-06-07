@@ -2,7 +2,7 @@
 title: "Project Proposal"
 format:
   html:
-    theme: default
+    theme: journal
 ---
 
 # Motivation
@@ -186,7 +186,7 @@ In relation to the reference node, this serves to narrow down the network to vie
 
 ### Plot area
 
-Shows the network plot. It will be interactive to enable closer inspection of network elements.
+Shows the network or visualisation plot. It will be interactive to enable closer inspection of network or visual elements.
 :::
 
 These are some prototypes of the webpage and shiny application that we are planning to build for the project. The whole concept of this storyboard is mainly to allow the user to utilise interactive visualisations such as timeseries slides, clickable components, or hovers to get to the bottom of the activites brewing at Oceanus such as the Nemo Reef Operation. Hence, enhancing the whole user experience as they follow us along on uncovering the story.
