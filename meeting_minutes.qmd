@@ -1,11 +1,8 @@
 ---
-title: "Meeting Minutes"
-format:
-  html:
-    theme: journal
+title: "`Meeting Minutes`"
 ---
 
-# **ISSS608 Group 2 Meeting Minutes**
+# **ISSS608 - Group 2 `Covert Reef` Meeting Minutes**
 
 ## **Project Meeting 1**
 
@@ -195,11 +192,11 @@ format:
 
 **Analysis 2:**
 
--    **Component A:** Deploy Audrey's community detection visualizations (reference sections 7.5.8 through 7.5.11)
+-   **Component A:** Deploy Audrey's community detection visualizations (reference sections 7.5.8 through 7.5.11)
 
--    **Component B:** Incorporate Li Jianyi's network metrics including betweenness centrality calculations
+-   **Component B:** Incorporate Li Jianyi's network metrics including betweenness centrality calculations
 
--    **Integration:** Merge Audrey's visual community mapping with Jianyi's quantitative connectivity analysis (degree and betweenness centrality measures)
+-   **Integration:** Merge Audrey's visual community mapping with Jianyi's quantitative connectivity analysis (degree and betweenness centrality measures)
 
 **Analysis 3:** Synthesize findings from Analyses 2A&B with 3A investigation, utilizing Audrey's Interactive Alluvial Diagrams as analytical foundation while ensuring coherence across related questions
 
@@ -213,9 +210,9 @@ format:
 
 -   **Hybrid Approach:**
 
-    -    Preserve Shiny implementations for enhanced demonstration capabilities
+    -   Preserve Shiny implementations for enhanced demonstration capabilities
 
-    -    Develop static alternatives optimized for Netlify integration
+    -   Develop static alternatives optimized for Netlify integration
 
 <!-- -->
 
