@@ -1,8 +1,9 @@
 ---
-title: "`Meeting Minutes`"
+title: "Meeting Minutes"
+format: html
 ---
 
-# **ISSS608 - Group 2 `Covert Reef` Meeting Minutes**
+# **ISSS608 - Group 2 Covert Reef Meeting Minutes**
 
 ## **Project Meeting 1**
 
