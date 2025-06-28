@@ -13,9 +13,12 @@ website:
         - methodology/1.qmd
         - methodology/2.qmd
         - methodology/3.qmd
-      - href: findings.qmd
-        text: Findings
+      - text: Findings
         icon: journal-text
+        menu: 
+          - intro.qmd
+          - datapre.qmd
+          - tasks.qmd
       - href: poster.qmd
         text: "{{< fa file-powerpoint >}} Poster"
       - href: meeting_minutes.qmd
