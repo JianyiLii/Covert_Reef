@@ -1424,7 +1424,7 @@ This shift suggests that while the first week’s communications were more focus
 
 # Question 2a)
 
-### 2.1.1 Unique count from each sender subtype
+### 2.1 Unique count from each sender subtype
 
 ::: panel-tabset
 ## Unique Count
@@ -1555,7 +1555,7 @@ p <-ggplot(plot_data1, aes(x = comm_date, y = comm_time_of_day)) +
 ggplotly(p, tooltip = "tooltip_text")
 ```
 
-#### 2.2.2.1 Findings on People/ Vessels:
+#### 2.2.3 Findings on People/ Vessels:
 
 -   Core logic:
 
@@ -1581,440 +1581,16 @@ ggplotly(p, tooltip = "tooltip_text")
 
 
 
-### 2.3.1 Suspicious Conversations
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show the code"
-library(reactable)
-library(dplyr)
-library(stringr)
-library(tidyr) # For separate_rows, if needed for 'Event Id' later
-
-# Create the data frame using tribble, consolidating multi-line entries
-df_new_data <- tribble(
-  ~Sender, ~Recipient, ~Commonalities, ~Rationale, ~Suspicious_Status, ~Date, ~Event_Id,
-  "The Lookout (Person)", "The Intern (Person)", "Mako", "Jensen from City Council signed a permit to set a corridor for Mako vessel.", "Jensen", "5/10", "371",
-  "Glitters Team aka. Sailor Shift Team", "Boss (Person)", "Permit, Commissioner Torres", "Glitters thanked their Boss who got Commissioner Torres to sign off the permit", "Nadia aka The Boss", "6/10", "389",
-  "Remora (Vessel)", "Sailor Shift Team aka. Glitters Team", "Permit, Commissioner Torres", "Davis thanked Nadia who got Commissioner Torres to sign off the permit", "Nadia aka The Boss", "6/10", "388",
-  "Mrs. Money (Person)", "Mako (Vessel); Neptune (Vessel)", "Mako, Remora, Neptune", "Mrs. Money is the Financial Controller who provides the payment protocols for Mako and Remora's captions. She also provides the encryption protocols and transfer devices. Mrs. Money coordinates payment protocols for Remora and Mako captains", "Elise aka. Mrs. Money", "7/10", "458 and 464",
-  "Neptune/ Neptune Captain", "Elise aka. Mrs. Money (Person)", "Remora, Mako", "Neptune told her to coordinate payment protocols for Remora and Mako captains", "Elise aka. Mrs. Money", "7/10", "456 and 518",
-  "Remona (Vessel)", "Rodriquez (Person)", "Sailor Shift", "Nemo Reef selected for Sailor Shift's music shoot.; Nadia personally handled permits for Nemo Reefs after meeting Davis.", "Both", "2/10", "153 and 328",
-  "Remona (Vessel)", "Nadia (Person)", "Delta 3, Sailor Shift", "Tourism facade created by Remona and awaiting installation of underwater lighting placements at Nemo Reef.", "Both", "14/10", "943",
-  "Davis (Person)", "Mako (Vessel)", "Rodriquez, Nadia, Neptune", "Rodriquez will help with logistics.", "Both", "2/10", "115",
-  "Davis (Person)", "Mako (Vessel)", "Rodriquez, Nadia, Neptune", "V. Miesel's Marine Research Permit is CR-7844. There is a 5 day deadline from 8 Oct.", "Both", "8/10", "548",
-  "Davis (Person)", "Mako (Vessel)", "Rodriquez, Nadia, Neptune", "V. Miesel approved their operational authority.", "Both", "12/10", "802",
-  "Davis (Person)", "Remona (Vessel)", "Client", "Davis wants to maintain client's privacy with Paackland Harbour.", "Both, and also Paackland Harbour", "4/10", "282",
-  "Mako (Vessel)", "Davis (Person)", "Permit CR-7844, Boss", "Davis is a captain.", "Both", "5/10", "349",
-  "Mako (Vessel)", "Boss (Person)", "Boss, Samantha", "Oceanus Council approved Mako's departure to Nemo Reef with minimal documentation.", "Oceanus Council", "5/10", "365",
-  "Boss (Person)", "Marko (Vessel)", "Mission, Boss", "Informed Marko to abort mission as conservation patrols are tracking it", "Both", "4/10", "316",
-  "Small Fry aka Rodriquez (Person)", "Remora (Vessel, Mako (Vessel)", "Slip #14, Glitters Team, Sailor Team", "Mako asked Rodriquez when he could come by slip #14.; Small Fry replied he would come by slip #14 in 30 minutes time.; Small Fry surprised that Glitters Team filing for paperwork downtown for protected area of Nemo Reef.", "Both", "2/10", "142, 143 and 156",
-  "Neptune", "Nadia (Person); Neptune (Vessel)", "Equipment specs", "Neptune asked to meet Nadia at 0600 and confirm the equipment specs approved by Elise.; Nadia confirmed the time with Neptune and agreed to show her reviewed equipment specs from The Accountant.", "Both; Elise aka The Accountant", "8/10", "537 and 738",
-  "Knowles (Vessel)", "Davis (Person)", "Boss", "Instructed by Mako to provide equipment transfer.", "Both", "14/10", "1001 and 1003",
-  "Sentinel(Vessel)", "Mako (Vessel)", "Permit", "Mako told Sentinel it was operating under NR-1045.", "Mako", "7/10", "467",
-  "Mako (Vessel)", "Sentinel (Vessel)", "Permit", "Sentinel asked the reasons for Mako operating under permit NR-1045", "Mako", "8/10", "574",
-  "Mako (Vessel)", "Sentinel (Vessel)", "Permit", "Mako told Sentinel it was operating under permit CR-7844 (marine equipment transport) not NR-1045", "Mako", "8/10", "575",
-  "Miranda (Person)", "Clepper Jesen (Person)", "Rodriquez", "Rodriquez filed for permits under Sailor Shifts Team for 2 commercial and 1 private yatch to perform environmental sampling.", "Rodriquez is suspicious. The communicators are not suspicious.", "2/10", "130",
-  "Miranda (Person)", "Clepper Jesen (Person)", "Rodriquez", "Rodriquez is connected to a mining consortium with previous violations in protected areas.", "Rodriquez is suspicious. The communicators are not suspicious", "2/10", "134",
-  "Miranda (Person)", "Clepper Jesen (Person)", "Rodriquez", "Rodriquez is connected to Council Knowles and they are related to V. Miesel Shipping which is possibly a shell company which has vessels.", "Rodriquez is suspicious. The communicators are not suspicious.", "3/10", "201",
-  "Miranda (Person)", "Clepper Jesen (Person)", "Rodriquez is suspicious", "Council Knowles' brother-in-law owns the offshore bank account to V. Miesel Shipping. The company is involved in rare earth extraction.", "Rodriquez is suspicious. The communicators are not suspicious.", "3/10", "204",
-  "Miranda (Person)", "Clepper Jesen (Person)", "Rodriquez is suspicious", "Knowles accepted cash from Rodriquez.", "Rodriquez is suspicious. The communicators are not suspicious.", "3/10", "206"
-)
-
-# Process the data (primarily for consistent whitespace and Event_Id splitting if necessary)
-df_processed <- df_new_data %>%
-  # Standardize delimiters and remove excess whitespace across all character columns.
-  mutate(
-    across(where(is.character), ~ str_replace_all(.x, "[,\n]+", ", ") %>% str_trim())
-  ) %>%
-  # For Event_Id, replace "and" with comma and then separate rows if needed
-  mutate(Event_Id = str_replace_all(Event_Id, " and ", ", ")) %>%
-  mutate(across(where(is.character), str_trim)) %>%
-  mutate(Event_Id = as.character(Event_Id)) # Ensure Event_Id is character
-
-# Create the reactable table
-reactable(
-  df_processed,
-  filterable = TRUE,
-  searchable = TRUE,
-  paginationType = "numbers",
-  defaultPageSize = 5,
-  showPageSizeOptions = TRUE,
-  pageSizeOptions = c(5, 10, 20, 50, 100),
-  striped = TRUE,
-  highlight = TRUE,
-  columns = list(
-    Sender = colDef(name = "Sender", minWidth = 120),
-    Recipient = colDef(name = "Recipient", minWidth = 120),
-    Commonalities = colDef(name = "Commonalities", minWidth = 150),
-    Rationale = colDef(name = "Rationale", minWidth = 300),
-    # Rename Suspicious_Status for display
-    Suspicious_Status = colDef(name = "Suspicious?", minWidth = 150),
-    # Date column as text, no special date sorting
-    Date = colDef(name = "Date", minWidth = 80, align = "center"),
-    Event_Id = colDef(name = "Event Id", minWidth = 80, align = "center")
-  ),
-  theme = reactableTheme(
-    borderColor = "#dfe2e5",
-    stripedColor = "#f6f8fa",
-    highlightColor = "#f0f5f9",
-    cellPadding = "8px 12px",
-    style = list(fontFamily = "Verdana, Geneva, sans-serif", fontSize = "14px"),
-    headerStyle = list(
-      "&.rt-th:hover" = list(backgroundColor = "#e0e6eb"),
-      fontSize = "15px",
-      fontWeight = 600,
-      color = "#333",
-      background = "#f7f7f7"
-    ),
-    rowSelectedStyle = list(backgroundColor = "#e6f2ff", "&:hover" = list(backgroundColor = "#e6f2ff")),
-    searchInputStyle = list(width = "100%", margin = "5px 0", padding = "5px"),
-    filterInputStyle = list(width = "100%", margin = "2px 0", padding = "4px")
-  )
-)
-```
-
-### 2.3.2 Non-suspicious conversations
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show the code"
-# Load necessary packages
-library(reactable)
-library(dplyr)
-library(stringr)
-library(tidyr) # For separate_rows
-library(lubridate) # For date parsing
-
-# 1. Manually parse the data into a tribble
-# Each row in the tribble corresponds to a logical entry from provided text.
-# Multi-line strings within a cell are captured using '\n'.
-# The 'Suspicious?' column is named 'Suspicious_Status' in R to avoid special characters,
-# and will be renamed in the reactable column definition for display.
-df_raw_input <- tribble(
-  ~Sender, ~Recipient, ~Commonalities, ~Rationale, ~Suspicious_Status, ~Date, ~Event_Id,
-  "Samantha (Person)", "Sailor Shift Team aka Glitters Team (Organization)", "Permit, Nemo Reef, Music Video", "Samantha was assisting Sailor Shift Team to coordinate the permit and equipment rental for their music video and wanted confirmation on Nemo Reef as their intended location.", "Unsure", "1/10", "64",
-  "Sailor Shift Team aka Glitters Team (Organization)", "Samantha (Person)", "Permit, Nemo Reef,", "Glitters Team confirmed with Samantha that they would like to use Nemo Reef as their primary location", "Unsure", "1/10", "66",
-  "Mako (Vessel)", "Samantha (Person)", "Nemo Reef Permit", "Mako claims that Samantha has a coordination team. Preparing for an event in a week's time from 6 Oct.", "Samantha is not", "6/10", "380",
-  "Mako (Vessel)", "Samantha (Person)", "Nemo Reef Permit", "Samantha advised them to stop activities which might be illegal without permit", "Samantha is not", "10/10", "687",
-  "The Lookout (Person)", "Sentinel (Vessel)", "Marina's Dream, Music Video", "Spotted 3 suspicious vessels around Nemo Reef on 3/10.", "Both are not", "3/10", "171",
-  "The Lookout (Person)", "Sentinel (Vessel)", "Marina's Dream, Music Video", "Spotted music video production on 13/10", "Both are not", "13/10", "912",
-  "The Lookout (Person)", "Horizon (Vessel)", "Music Video", "Found it suspicious to spot lighting rigs and cameras at 12pm. Wanted Horizon to investigate", "Both are not", "13/10", "926",
-  "EcoVigil (Vessel)", "Liam (Person)", "ROVs", "Collection of water samples using ROVs", "EcoVigil is not", "11/10", "737 and 751" # "and" will be handled by separate_rows
-)
-
-# 2. Process the data for display and sorting
-df_processed <- df_raw_input %>%
-  # Standardize delimiters and remove excess whitespace across all character columns.
-  # This flattens multi-line strings within cells and makes 'separate_rows' more reliable.
-  mutate(
-    across(where(is.character), ~ str_replace_all(.x, "[,\n]+", ", ") %>% str_trim())
-  ) %>%
-  # Handle the "and" in Event_Id, converting it to a comma for consistent splitting.
-  mutate(Event_Id = str_replace_all(Event_Id, " and ", ", ")) %>%
-  # Now, use separate_rows for Event_Id if it contains multiple comma-separated values.
-  # 'Date' column appears to be single-valued in this dataset, so it's not included here.
-  # If Date could also have multiple values (e.g., "1/10, 2/10"), you would add it to separate_rows.
-  separate_rows(Event_Id, sep = ", ", convert = FALSE) %>%
-  # Trim whitespace again after separation in case of leading/trailing spaces
-  mutate(across(where(is.character), str_trim)) %>%
-  # Convert Date to actual date objects for proper sorting.
-  # Using `dmy` for day/month/year format and assuming the current year (2025).
-  mutate(
-    FullDate = paste0(Date, "/2025"), # Add the current year for correct parsing
-    ParsedDate = dmy(FullDate, quiet = TRUE) # Convert to Date object (Day Month Year)
-  ) %>%
-  # Order the data by parsed date and then event ID
-  arrange(ParsedDate, Event_Id) %>%
-  select(-FullDate) %>% # Remove the helper column
-  # Ensure Event_Id is character type for display purposes
-  mutate(Event_Id = as.character(Event_Id))
-
-# 3. Create the reactable table
-reactable(
-  df_processed,
-  filterable = TRUE, # Enable column filters at the top of each column
-  searchable = TRUE, # Add a global search box above the table
-  paginationType = "numbers", # Display page numbers (e.g., 1, 2, 3 instead of Prev/Next)
-  defaultPageSize = 5, # Show 5 rows per page by default
-  showPageSizeOptions = TRUE, # Allow users to select different page sizes
-  pageSizeOptions = c(5, 10, 20, 50, 100), # Available page size options
-  striped = TRUE, # Add alternating row colors for better readability
-  highlight = TRUE, # Highlight the row when the user hovers over it
-  # Define the default sorting for the table when it first loads
-  defaultSorted = list(ParsedDate = "asc"), # Sort by the hidden ParsedDate column in ascending order
-  columns = list(
-    # The 'ParsedDate' column is used internally for correct date sorting but is not displayed
-    ParsedDate = colDef(
-      show = FALSE
-    ),
-    # Define how each visible column should be displayed and behave
-    Date = colDef(
-      name = "Date", # Display name for the column header
-      defaultSortOrder = "asc", # Ensure initial sort is ascending for the displayed date
-      minWidth = 80, # Minimum width for the column to ensure content fits
-      align = "center" # Align text to the center for better presentation of dates
-    ),
-    Sender = colDef(name = "Sender", minWidth = 120),
-    Recipient = colDef(name = "Recipient", minWidth = 120),
-    Commonalities = colDef(name = "Commonalities", minWidth = 150),
-    Rationale = colDef(name = "Rationale", minWidth = 300),
-    # Custom definition for the 'Suspicious_Status' column to display its original name
-    Suspicious_Status = colDef(name = "Suspicious?", minWidth = 150),
-    Event_Id = colDef(
-      name = "Event ID", # Display name for the column header
-      minWidth = 80, # Minimum width
-      align = "center" # Align text to the center
-    )
-  ),
-  # Customize the visual theme of the reactable table for a consistent look and feel
-  theme = reactableTheme(
-    borderColor = "#dfe2e5", # Defines the color of table borders
-    stripedColor = "#f6f8fa", # Defines the background color of striped rows
-    highlightColor = "#f0f5f9", # Defines the background color when a row is hovered over
-    cellPadding = "8px 12px", # Sets the padding inside table cells
-    style = list(fontFamily = "Verdana, Geneva, sans-serif", fontSize = "14px"), # General font family and size for table content
-    headerStyle = list(
-      "&.rt-th:hover" = list(backgroundColor = "#e0e6eb"), # Hover effect for table headers
-      fontSize = "15px", # Font size for headers
-      fontWeight = 600, # Font weight for headers (bold)
-      color = "#333", # Text color for headers
-      background = "#f7f7f7" # Background color for headers
-    ),
-    rowSelectedStyle = list(backgroundColor = "#e6f2ff", "&:hover" = list(backgroundColor = "#e6f2ff")), # Style for selected rows
-    searchInputStyle = list(width = "100%", margin = "5px 0", padding = "5px"), # Style for the global search input box
-    filterInputStyle = list(width = "100%", margin = "2px 0", padding = "4px") # Style for individual column filter input boxes
-  )
-)
-```
 
 # Question 2b)
 
-### 7.5.2 Centrality Measure- All
-
-We then proceeded to use the PageRank centrality algorithm to assign a numerical weight to each node to reflect its importance. The community attribute we previously calculated was then assigned to this graph.
+### 2.3 Centrality Measure- People & Vessels
 
 ::: panel-tabset
 ## PageRank Centrality Algorithm
 
 ```{r, echo=FALSE}
-# --- STEP 1: Prepare the edge list ---
-edge_df <- other_communications_df %>%
-  select(sender_id, recipient_id) %>%
-  filter(!is.na(sender_id) & !is.na(recipient_id)) %>%
-  rename(from = sender_id, to = recipient_id) %>%
-  distinct()
 
-# Remove self-loops
-edge_df <- edge_df %>% filter(from != to)
-
-# --- STEP 2: Create the graph object (undirected) ---
-g <- tbl_graph(edges = edge_df, directed = FALSE)
-
-# --- STEP 3: Run Louvain community detection ---
-g <- g %>%
-  mutate(community = group_louvain())
-
-# --- STEP 4: Visualize the graph ---
-ggraph(g, layout = "fr") +
-  geom_edge_link(alpha = 0.3) +
-  geom_node_point(aes(color = as.factor(community)), size = 5) +
-  geom_node_text(aes(label = name), repel = TRUE, size = 3) +
-  theme_void() +
-  labs(title = "Community Detection in Communication Network",
-       color = "Community")
-set.seed(1234) 
-
-# --- Compute Centrality Measures ---
-g <- g %>%
-  mutate(
-    pagerank = centrality_pagerank(),
-    degree = centrality_degree(),
-    betweenness = centrality_betweenness(),
-    closeness = centrality_closeness()
-  )
-
-# Show top 10 nodes by PageRank
-g %>%
-  as_tibble() %>%
-  select(name, pagerank, degree, betweenness, closeness) %>%
-  arrange(desc(pagerank)) %>%
-  head(10)
-```
-
-## The Network
-
-```{r, echo=FALSE}
-set.seed(1234) 
-
-# Visualize by Centrality
-ggraph(g, layout = "fr") +
-  geom_edge_link(alpha = 0.3) +
-  geom_node_point(aes(size = pagerank, color = as.factor(community)), alpha = 0.8) +
-  geom_node_text(aes(label = name),
-                 repel = TRUE,
-                 size = 3,
-                 max.iter = 5000) + # <--- Increased this value 
-  theme_void() +
-  labs(title = "Network with PageRank Centrality",
-       size = "PageRank", color = "Community")
-```
-
-## The Code
-
-``` r
-set.seed(1234) 
-
-# --- STEP: Compute Centrality Measures ---
-g <- g %>%
-  mutate(
-    pagerank = centrality_pagerank(),
-    degree = centrality_degree(),
-    betweenness = centrality_betweenness(),
-    closeness = centrality_closeness()
-  )
-
-# Show top 10 nodes by PageRank
-g %>%
-  as_tibble() %>%
-  select(name, pagerank, degree, betweenness, closeness) %>%
-  arrange(desc(pagerank)) %>%
-  head(10)
-
-# Visualize by Centrality
-ggraph(g, layout = "fr") +
-  geom_edge_link(alpha = 0.3) +
-  geom_node_point(aes(size = pagerank, color = as.factor(community)), alpha = 0.8) +
-  geom_node_text(aes(label = name),
-                 repel = TRUE,
-                 size = 3,
-                 max.iter = 5000) + # <--- Increased this value 
-  theme_void() +
-  labs(title = "Network with PageRank Centrality",
-       size = "PageRank", color = "Community")
-```
-:::
-
-#### **7.5.2.1 Findings**:
-
--   There were around 6 closely associated groups. Community 5 (Clepper and Miranda) appeared to be segmented from the central group, due to the non-involvement from the nature of the investigative work.
--   From the graph, we extracted the 11 influential nodes to focus on:
-    -   Community 1: Reef Guardian, EcoVigil
-    -   Community 2: Neptune, Remora, Nadia, V. Miesel Shipping, Davis
-    -   Community 3: Mako
-    -   Community 4: Mrs. Money, Boss, The Middleman
-    -   Community 5: N/A as they were not very influential at global level
-    -   Community 6: N/A as they were not very influential at global level
-
-
-### 3.3.1 Community Group Membership- All
-
-The topic area was gathered from the bigram wordclouds and circular bar chart. The Group Name was created based on knowledge from the Members in the group and the topic area. These were the information from the 6 segmented groups:
-
-::: panel-tabset
-## The Table
-
-```{r, echo=FALSE}
-set.seed(1234)
-
-# 6. Create a tidy summary table of members per community
-grouped_members <- g %>%
-  as_tibble() %>%
-  select(name, community) %>%
-  group_by(community) %>%
-  summarise(
-    Members = paste(sort(name), collapse = ", "),
-    .groups = "drop"
-  ) %>%
-  mutate(
-    `Group Number` = community,
-    `Topic Area` = case_when(
-      community == 1 ~ "green guardians, city council, paackland harbor, green guardians, nemo reef, water quality",
-      community == 2 ~ "nemo reef, miesel shipping, permit, cr 7844, delta 3",
-      community == 3 ~ "nemo reef, himark harbor, samantha blake, radio silence",
-      community == 4 ~ "money, 0500 meeting, nemo reef, intern reporting, conservation activity, financial projections",
-      community == 5 ~ "sam, kelly, loading equipment",
-      community == 6 ~ "miranda reporting, jensen, project poseidon, conservation vessels, nemo reef",
-      TRUE ~ "Other"
-    ),
-    `Group Name` = case_when(
-      community == 1 ~ "Conservationist Group",
-      community == 2 ~ "Sailor Shift",
-      community == 3 ~ "Maritime",
-      community == 4 ~ "Suspicious Characters",
-      community == 5 ~ "Sam & Kelly",
-      community == 6 ~ "Hacklee Herald",
-      TRUE ~ "Miscellaneous"
-    )
-  ) %>%
-  select(`Group Number`, `Topic Area`, `Members`, `Group Name`)
-
-# Show the summary table in a clean format
-kable(grouped_members, caption = "Community Group Membership Summary", align = "l")
-```
-
-## The Code
-
-``` r
-set.seed(1234)
-
-# 6. Create a tidy summary table of members per community
-grouped_members <- g %>%
-  as_tibble() %>%
-  select(name, community) %>%
-  group_by(community) %>%
-  summarise(
-    Members = paste(sort(name), collapse = ", "),
-    .groups = "drop"
-  ) %>%
-  mutate(
-    `Group Number` = community,
-    `Topic Area` = case_when(
-      community == 1 ~ "green guardians, city council, paackland harbor, green guardians, nemo reef, water quality",
-      community == 2 ~ "nemo reef, miesel shipping, permit, cr 7844, delta 3",
-      community == 3 ~ "nemo reef, himark harbor, samantha blake, radio silence",
-      community == 4 ~ "money, 0500 meeting, nemo reef, intern reporting, conservation activity, financial projections",
-      community == 5 ~ "sam, kelly, loading equipment",
-      community == 6 ~ "miranda reporting, jensen, project poseidon, conservation vessels, nemo reef",
-      TRUE ~ "Other"
-    ),
-    `Group Name` = case_when(
-      community == 1 ~ "Conservationist Group",
-      community == 2 ~ "Sailor Shift",
-      community == 3 ~ "Maritime",
-      community == 4 ~ "Suspicious Characters",
-      community == 5 ~ "Sam & Kelly",
-      community == 6 ~ "Hacklee Herald",
-      TRUE ~ "Miscellaneous"
-    )
-  ) %>%
-  select(`Group Number`, `Topic Area`, `Members`, `Group Name`)
-
-# Show the summary table in a clean format
-kable(grouped_members, caption = "Community Group Membership Summary", align = "l")
-```
-:::
-
-#### **3.3.1.1 Findings:**
-
--   We focused on the 11 nodes in the suspicious groups named:
-    -   Sailor Shift (Influential Nodes: Neptune, Remora, Nadia, V. Miesel Shipping, Davis);
-    -   Maritime (Influential Node: Mako);
-    -   Conservationist Group: (Influential Nodes: Reef Guardian, EcoVigil); and
-    -   Suspicious Characters (Influential Nodes: Mrs. Money, Boss, The Middleman).
--   We held back on the slightly less influential nodes such as: Sam & Kelly, and Hacklee Herald which was where Clepper Jensen worked as a journalist.
-
-
-
-
-
-
-### 7.5.8 Centrality Measure- People & Vessels
-
-::: panel-tabset
-## PageRank Centrality Algorithm
-
-```{r, echo=FALSE}
 # --- Compute Centrality Measures ---
 set.seed(1234)
 g_pv <- g_pv %>%
@@ -2080,7 +1656,7 @@ ggraph(g_pv, layout = "fr") +
 ```
 :::
 
-#### **3.4.1.1 Findings:**
+#### **2.3.1 Findings:**
 
 -   There were 5 closely associated groups. Community 5 (Clepper and Miranda) appeared to be segmented from the central group, due to the non-involvement from the nature of their investigative work.
 -   From the graph, we extracted the 8 influential nodes to focus on:
@@ -2090,7 +1666,7 @@ ggraph(g_pv, layout = "fr") +
     -   Community 4: Mrs. Money, Boss, The Middleman
     -   Community 5: N/A as they were not very influential at global level
 
-### 7.5.9 Wordclouds- Bigrams
+### 2.4 Wordclouds- Bigrams
 
 We focused on bigrams here to get more contextual data from two instead of one word.
 
@@ -2146,7 +1722,7 @@ for (i in sort(valid_communities)) {
 ```
 :::
 
-### 7.5.10 Circular barchart for Top Bigrams per Community
+### 2.5 Circular barchart for Top Bigrams per Community
 
 ::: panel-tabset
 ## The Circular Barchart
@@ -2460,7 +2036,7 @@ print(p)
 ```
 :::
 
-### 7.5.11 Community Group Membership- People & Vessels
+### 2.6 Community Group Membership- People & Vessels
 
 The topic area was gathered from the bigram wordclouds and circular bar chart. The Group Name was created based on knowledge from the Members in the group and the topic area. These are the information for the 5 segmented groups:
 
@@ -2542,9 +2118,9 @@ kable(grouped_members, caption = "Community Group Membership Summary", align = "
 ```
 :::
 
-#### **7.5.11.1 Findings:**
+#### **2.6.1 Findings:**
 
--   Movements and changes in membership since section 7.5.6:
+-   Movements and changes in membership since section 1.1.2:
     -   Mako moved from Maritime to Conservationist.
     -   Samantha Blake moved from the Suspicious Characters to Conservationist.
     -   Sam and Kelly moved from their own Community to Pseudonym.
@@ -2558,7 +2134,7 @@ kable(grouped_members, caption = "Community Group Membership Summary", align = "
 -   We held back on the slightly less influential nodes such as: Hacklee Herald which was where Clepper Jensen worked as a journalist.
 
 
-### 7.5.13 Discussion/ Interpretation:
+### 2.7 Discussion/ Interpretation:
 
 We mainly focused on the conversations by 8 influential nodes and some related nodes:
 
@@ -2578,7 +2154,7 @@ We mainly focused on the conversations by 8 influential nodes and some related n
 
 # Question 3a)
 
-## 8.1 Entities Breakdown
+## 3.1 Entities Breakdown
 
 **Core Logic:**
 
@@ -2742,7 +2318,7 @@ Understanding pseudonyms significantly reshapes our interpretation of the events
 
 # Question 4a)
 
-## 9.1 Nadia's Ego Network- Louvain community
+## 4.1 Nadia's Ego Network- Louvain community
 
 ::: panel-tabset
 ## Ego Network
@@ -2832,9 +2408,9 @@ ggraph(nadia_ego_graph, layout = "fr") +
 -   The orange community were possibly involved in Sailor Shifts's music video, while the green community were likely regarding ensuring compliance to authorities such as officials, the harbour and conservation team.
 -   Nadia, Elise, and Marlin were the orange nodes that directly linked to the green nodes.
 
-## 9.2 Nadia's Sent and Received Ego Networks- VizNetwork
+## 4.2 Nadia's Sent and Received Ego Networks- VizNetwork
 
-### 9.2.1 Data Preparation
+### 4.2.1 Data Preparation
 
 ::: panel-tabset
 ## Preparation- Nodes & Edges
@@ -3306,9 +2882,9 @@ print("---------------------------------------------------------------------")
 ```
 :::
 
-### 9.2.2 Nadia's Sent and Received Ego Networks
+### 4.2.2 Nadia's Sent and Received Ego Networks
 
-### 9.2.2.1 Sent Communications Network
+### 4.2.2.1 Sent Communications Network
 
 ::: no-code-fold
 ```{r, echo=FALSE}
@@ -3495,7 +3071,7 @@ build_visnetwork_plot <- function(edge_df, title_label) {
 build_visnetwork_plot(edges_sent, "Nadia Sent Ego Network")
 ```
 
-### 9.2.2.2 Received Communications Network
+### 4.2.2.2 Received Communications Network
 
 ::: no-code-fold
 ```{r, echo=FALSE}
@@ -3510,7 +3086,7 @@ build_visnetwork_plot(edges_received, "Nadia Received Ego Network")
 build_visnetwork_plot(edges_received, "Nadia Received Ego Network")
 ```
 
-### **9.2.3 Findings**:
+### **4.2.3 Findings**:
 
 We then wanted to find more about the correspondences. The first graph illustrated Nadia's sent communications and the second graph were her received communications. Hover over nodes to see the sent or received count from the perspective of the entity. Hover over arrowheads to see the number, direction, count, first and last correspondence time, type of sent or received, and content of one communication. Nadia sent only 8 but received 18 communications (possibly indicative of using a pseudonym):
 
@@ -3522,7 +3098,7 @@ We then wanted to find more about the correspondences. The first graph illustrat
 
 -   The next step would be to find out the suspicious characters/ activities.
 
-## 9.3 Nadia's Ego Network: 3-hops degree centrality
+## 4.3 Nadia's Ego Network: 3-hops degree centrality
 
 To uncover more details, we designed n-hops degree centrality here. We input 3 hops to hover over the nodes and look into the communications in a wider network. 3-hop exposes overlapping communites (Nadia communicating with someone who coordinates between groups). The "bridges" may show their value in 3-hops. It also increases the change of detecting complete or near complete cliques. We understand that should there be requirements for details, we could look into n-hops and more.
 
@@ -3826,9 +3402,9 @@ net
 
 # Question 4b)
 
-## **9.4 Summary of Nadia's Actions**
+## **4.4 Summary of Nadia's Actions**
 
-### 9.4.1 Sequential Timeline in Table (3-hop)
+### 4.4.1 Sequential Timeline in Table (3-hop)
 
 ::: panel-tabset
 ## The Suspicious Entities
@@ -4021,9 +3597,9 @@ print(unique_ids)
 
 -   Elise, EcoVigil, Elise, Davis, Liam, Mako, Neptune, Sam, Remora, Rodriguez, Sailor Shifts Team, Sentinel, The Accountant, Oceanus City Council, V. Miesel Shipping possibly found something suspicious or were involved in something suspicious.
 
-### 9.4.2 Plotted Timeline (3-hop)- Only suspicious communications
+### 4.4.2 Plotted Timeline (3-hop)- Only suspicious communications
 
-These are the suspicious communications extracted from 9.4.1.
+These are the suspicious communications extracted from 4.4.1.
 
 ```{r}
 #| code-fold: true
@@ -4217,11 +3793,11 @@ ggplotly(p, tooltip = "text")
 
 ```
 
-## **9.5 Discussion/Interpretation (1 & 3 hop data):**
+## **4.5 Discussion/Interpretation (1 & 3 hop data):**
 
 There were certain questions we posted to ourselves and came out with the answers.
 
-### 9.5.1 The Community and Ego Network:
+### 4.5.1 The Community and Ego Network:
 
 #### Question and Answer Analysis
 
@@ -4293,11 +3869,11 @@ In the `nadia_full_communications_timeline` table, the actual content of her dir
 +-----------------------+--------------+-----------+--------------------------------------------------------------------------------------------------------------------------+----------+
 :::
 
-## **9.6 Querying Keywords**
+## **4.6 Querying Keywords**
 
 Based on our knowledge, we decided to connect to external information. We used knowledge from Nadia's current network and communication with keyword search of our queries.
 
-### 9.6.1 Plotted Timeline (Word Query: Permit related)
+### 4.6.1 Plotted Timeline (Word Query: Permit related)
 
 ```{r}
 #| code-fold: true
@@ -4384,7 +3960,7 @@ ggplotly(p, tooltip = "text")
 
 ```
 
-### 9.6.1.1 Findings in sequential order:
+### 4.6.1.1 Findings in sequential order:
 
 -   There were overlaps as the blue permit also included the red NR-1045 permit and green CR-7844 permit.
 
@@ -4491,7 +4067,7 @@ reactable(
 
 -   Using information obtained from question 2 and 4, we had in mind certain keywords to query for.
 
-### 9.6.2 Plotted Timeline (Word Query: Music Video Related)
+### 4.6.2 Plotted Timeline (Word Query: Music Video Related)
 
 ```{r}
 #| code-fold: true
@@ -4580,7 +4156,7 @@ p <- ggplot(plot_data, aes(x = comm_date, y = comm_time_of_day)) +
 ggplotly(p, tooltip = "text")
 ```
 
-### 9.6.2.1 Findings through Questions & Answers:
+### 4.6.2.1 Findings through Questions & Answers:
 
 #### **Question and Answer Analysis**
 
@@ -4589,19 +4165,19 @@ ggplotly(p, tooltip = "text")
 +==============================================================================================================================+==========================================================================================================================================================================================================================================================================================================================================+
 | Which vessel was the suspicious permit #CR-7844 prepared for?                                                                | From question 2 and 4, we know this is V. Miesel's Marine Research Permit, and prepared for Mako (lead vessel), Neptune, and Remora.                                                                                                                                                                                                     |
 |                                                                                                                              |                                                                                                                                                                                                                                                                                                                                          |
-| (See 9.6.1.1)                                                                                                                |                                                                                                                                                                                                                                                                                                                                          |
+| (See 4.6.1.1)                                                                                                                |                                                                                                                                                                                                                                                                                                                                          |
 +------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | What suspicious activity was performed at Nemo Reef? Which day was it?                                                       | 14 Oct 2040 for a music video production.                                                                                                                                                                                                                                                                                                |
 |                                                                                                                              |                                                                                                                                                                                                                                                                                                                                          |
-| (See 9.6.2)                                                                                                                  |                                                                                                                                                                                                                                                                                                                                          |
+| (See 4.6.2)                                                                                                                  |                                                                                                                                                                                                                                                                                                                                          |
 +------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Why is underwater lighting placement needed at Nemo Reef?                                                                    | For a music video production.                                                                                                                                                                                                                                                                                                            |
 |                                                                                                                              |                                                                                                                                                                                                                                                                                                                                          |
-| (See 9.6.2)                                                                                                                  |                                                                                                                                                                                                                                                                                                                                          |
+| (See 4.6.2)                                                                                                                  |                                                                                                                                                                                                                                                                                                                                          |
 +------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | What were the expedited approvals and secretive logistics?                                                                   | Permits for Nemo Reef through NR-1045 and CR-788 were expedited. The secretive logistics were the crates and equipment on the vessels for the music video production.                                                                                                                                                                    |
 |                                                                                                                              |                                                                                                                                                                                                                                                                                                                                          |
-| (See 9.6.1 and 9.6.2)                                                                                                        |                                                                                                                                                                                                                                                                                                                                          |
+| (See 4.6.1 and 4.6.2)                                                                                                        |                                                                                                                                                                                                                                                                                                                                          |
 +------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Who were the high-level Oceanus officials, Sailor Shift’s team, local influential families, and local conservationist group? | **Oceanus Officials**: Commissioner Blake, Commissioner Torres, Council Knowles, The Middleman, Jensen, Liam Thorne                                                                                                                                                                                                                      |
 |                                                                                                                              |                                                                                                                                                                                                                                                                                                                                          |
@@ -4616,125 +4192,3 @@ ggplotly(p, tooltip = "text")
 | (Id 979)                                                                                                                     |                                                                                                                                                                                                                                                                                                                                          |
 +------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-# **10) Recreation of Story-Line**
-
-Here we attempted to summarise the story-line.
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show the code"
-# --- Step 0: Define Event Data for Annotations ---
-event_dates <- as.Date(c("2040-10-01", "2040-10-03", "2040-10-04", "2040-10-05",
-                         "2040-10-06", "2040-10-08", "2040-10-09", "2040-10-11",
-                         "2040-10-12", "2040-10-14"))
-
-event_labels_full <- c(
-  "The Middleman told The Boss (Nadia) about a potential loophole in Nemo Reef protection zone",
-  "Tourism vessels were offering authorised access. Their violations were addressed at City Council meeting",
-  "Nadia told Mako to abort Nemo Reef mission as conservation vessels were close",
-  "News of Nadia assisting to get permit for Nemo Reef signed by Jensen from City Council on 4/10 spreaded",
-  "V. Miesel Shipping HQ told Neptune that Mako is lead vessel",
-  "Neptune told Mako they were under special marine research permit CR-7844",
-  "Neptune's underwater concrete forms in fragile crates discovered",
-  "37 'authorised maintenance vessels' documented despite Nemo Reef closure",
-  "Crew reallocated from Remona to Neptune overseen by Captain Davis",
-  "Music video production after Nemo Reef equipment transfer"
-)
-
-event_labels_short <- c(
-  "Loophole", "Tourism", "Mako", "Permit\nResults", "#NR-1045",
-  "#CR-7844", "Underwater\nStructure", "37 Vessels", "Shifted Crew", "MV\nProduction"
-)
-
-# --- Step 1: Calculate Daily Message Frequencies ---
-freq_df <- other_communications_df %>%
-  mutate(comm_date = as.Date(timestamp)) %>%
-  count(comm_date, name = "message_count") %>%
-  # Complete the date range to include all days, filling missing counts with 0
-  complete(comm_date = seq(min(comm_date), max(comm_date), by = "day"),
-           fill = list(message_count = 0))
-
-# --- Step 2: Build Event Annotation Table ---
-event_df <- tibble(
-  date = event_dates,
-  label = gsub("\n", "<br>", event_labels_short), # Replace \n with <br> for HTML tooltips
-  tooltip_raw = str_wrap(event_labels_full, width = 40) # Wrap long text for tooltips
-)
-
-core_events <- event_df %>%
-  left_join(freq_df, by = c("date" = "comm_date")) %>%
-  group_by(date) %>%
-  mutate(
-    offset = row_number(), # For stacking multiple events on the same day
-    # Adjust value for arrow positioning relative to message count
-    value = as.numeric(message_count) + 0.5 * offset,
-    date_jitter = date + (offset - 1) * 0.1 # Slight horizontal jitter if multiple events
-  ) %>%
-  ungroup() %>%
-  mutate(
-    # Create rich HTML tooltip content for Plotly
-    tooltip = paste0(
-      "📅 <b>Date:</b> ", date,
-      "<br>✉️ <b>Messages:</b> ", message_count,
-      "<br>📝 <b>Core Event:</b> ", tooltip_raw
-    )
-  )
-
-# --- Step 3: Create the ggplot2 Plot ---
-p <- ggplot(freq_df, aes(x = comm_date, y = message_count)) +
-  # Line plot for message frequency
-  geom_line(color = "navyblue") +
-  # Segments (arrows) pointing from the line to the event annotations
-  geom_segment(
-    data = core_events,
-    aes(x = date, xend = date, y = value - 1, yend = value + 0.5), # Adjust yend for arrow tip
-    arrow = arrow(length = unit(0.15, "inches")), color = "grey40"
-  ) +
-  # Points for the events (these will have the interactive tooltips)
-  geom_point(
-    data = core_events,
-    aes(x = date, y = value + 0.5, text = tooltip), # 'text' aesthetic is key for Plotly tooltips
-    color = "firebrick", size = 3
-  ) +
-  # Text labels for the short event names
-  geom_text(
-    data = core_events,
-    aes(x = date, y = value + 2, label = label), # Position text above the point/arrow
-    color = "black", fontface = "bold", size = 2.5, vjust = 0
-  ) +
-  # X-axis scale for dates
-  scale_x_date(date_breaks = "1 day", date_labels = "%b %d") +
-  # Labels and titles
-  labs(
-    title = "Message Frequency Over Time",
-    x = "Date", y = "Message Count"
-  ) +
-  # Ensure annotations are not clipped by plot limits
-  coord_cartesian(clip = "off") +
-  # Minimal theme for a clean look
-  theme_grey(base_size = 10) +
-  # Further theme adjustments
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1),
-    plot.title = element_text(face="bold"),
-    plot.margin = margin(30, 30, 10, 10), # Adjust plot margins if needed
-  )
-
-# --- Step 4: Convert to Interactive Plotly Object ---
-# The 'tooltip = "text"' argument tells Plotly to use the 'text' aesthetic
-# for the hover information, which we created as 'tooltip' in core_events.
-p_interactive <- ggplotly(p, tooltip = "text")
-
-# --- Step 5: Display the Interactive Plot ---
-p_interactive
-```
-
-Hover over the red points to see the details. Here, we provided a high level summary on the core event on the preparation and production of the music video Nadia was involved in for a period of 2 weeks, and also provided a snippet to the sub-event of the tourism vessels breaching protocols earlier in the week.
-
-# **11) References**
-
--   Datastorm (2021) [visNetwork](https://datastorm-open.github.io/visNetwork/)
-
--   Dr. Kam Tin Seong (2025) [Lesson 9: Visualising and Analysis Network Data](https://isss608-ay2024-25apr.netlify.app/outline/lesson09_outline)
-
--   R-Graph (2025) [Reactable](https://r-graph-gallery.com/package/reactable.html)
