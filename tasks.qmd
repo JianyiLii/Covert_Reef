@@ -1536,12 +1536,9 @@ There were no Group sub-type as confirmed by this filtered table.
 
 ## 2.2 People and Vessels
 
-Due to a large number of entity subtypes as people and vessels in 7.1.4, we then looked into the characters' and vessel's identity and their actual communication content.
 
 ### 2.2.1 Filter by Vessel and Person only
 
-::: panel-tabset
-## The Code
 
 ```{r}
 person_vessel_df <- other_communications_df %>%
@@ -1552,7 +1549,7 @@ person_vessel_df <- other_communications_df %>%
     (sender_sub_type == "Vessel" & recipient_sub_type == "Vessel")
   )
 ```
-:::
+
 
 ### 2.2.2 Plotted Timeline- People & Vessels
 
@@ -1651,7 +1648,6 @@ ggplotly(p, tooltip = "tooltip_text")
 
 -   Seawatch only appeared on 10 Oct but Horizon talked to Seawatch on 8 Oct. Therefore, some other entity is Seawatch before or during 8 Oct. Defender told Seawatch on 3 Oct at 8.39am that it increased its patrol and informed Seawatch to maintain vigilance. The Lookout (Seawatch) responded to Sentinel (Defender) at 8.41am that it acknowledged the need for vigilance.
 
--   After getting a general idea of the characters' involvement, we looked at the interactions in 7.3.
 
 
 
@@ -1822,9 +1818,7 @@ for (i in sort(unique(bigrams$community))) {
   })
   mtext(paste("Community", i), side = 3, line = 1, adj = 0.5, cex = 1.5, col = "black")
 }
-```
 
-```{r, echo=FALSE}
 # 5b. Plot word clouds per community
 valid_communities <- unique(g_pv %>% as_tibble() %>% pull(community))
 
@@ -2035,7 +2029,6 @@ print(p)
 ``` r
 set.seed(1234)
 
-set.seed(1234)
 
 valid_communities <- g_pv %>%
   as_tibble() %>%
@@ -2278,7 +2271,7 @@ kable(grouped_members, caption = "Community Group Membership Summary", align = "
     -   The Lookout moved from Conservationist Group to Pseudonym.
     -   The Intern moved from Suspicious Characters to Pseudonym.
     -   Sailor Shift community renamed to Permit
--   From 11 nodes in section 7.5.6.1, we further narrowed down on the 8 nodes in the suspicious groups named:
+-   From 11 nodes, we further narrowed down on the 8 nodes in the suspicious groups named:
     -   Permit (Influential Nodes: Neptune, Remora, Nadia, Davis);
     -   Conservationist Group (Influential Node: Mako);
     -   Suspicious (Influential Nodes: Mrs. Money, Boss, The Middleman).
