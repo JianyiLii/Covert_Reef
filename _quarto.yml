@@ -36,7 +36,7 @@ website:
         - href: "https://github.com/JianyiLii/Group_Project-MC3"
           text: Project Site
           target: _blank
-        - href: ""
+        - href: "https://jianyivaa.shinyapps.io/Shiny_CovertReef/"
           text: Shiny App
           target: _blank
 format:
