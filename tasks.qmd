@@ -1,5 +1,5 @@
 ---
-title: "🌊 `Visual Analysis Finding` 🪸"
+title: "🌊 Visual Analysis Finding 🪸"
 format:
   html:
     mermaid: 
@@ -10,7 +10,6 @@ execute:
   freeze: false
   
 code-fold: false
-editor: visual
 ---
 
 ```{r}
@@ -3222,7 +3221,7 @@ build_visnetwork_plot(edges_sent, "Nadia Sent Ego Network")
 
 :::
 
-```{r, output=FALSE}
+```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
 # Define custom colors for node types (reusing from previous code)
