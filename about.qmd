@@ -1,5 +1,48 @@
 ---
-title: "`About`"
+title: "`🌊 Covert Reef Team Members 🪸`"
+format: 
+  html:
+    allow-html: true
+    mermaid: 
+      theme: default
+      
+about:
+  template: jolla
+  links:
+    - icon: globe
+      text: Shiny
+      href: ""
+    - icon: github
+      text: GitHub
 ---
 
-About this site
+::: {.panel-tabset}
+
+## Yang Lu
+
+Write something!!!!
+
+::: {.callout-note title="Yang Lu"}
+Please feel free to click on my LinkedIn and GitHub links for more info! <br>
+[<i class="fa-brands fa-linkedin"></i> Linkedin]() &nbsp;|&nbsp; [<i class="fa-brands fa-github"></i> GitHub]()
+:::
+
+## Audrey Tan
+
+Write something!!!!
+
+::: {.callout-note title="Audrey"}
+Please feel free to click on my LinkedIn and GitHub links for more info! <br>
+[<i class="fa-brands fa-linkedin"></i> Linkedin]() &nbsp;|&nbsp;  [<i class="fa-brands fa-github"></i> GitHub]()
+:::
+
+## Li Jianyi
+
+My name is Jianyi, and I came into the Visual Analytics module hoping to learn how to turn complex data into clear and engaging visuals. The module exceeded my expectations by equipping me with practical skills in R, Shiny, and Quarto, while also teaching me the importance of design, storytelling, and user experience in data communication. I especially enjoyed building interactive dashboards and applying visual thinking to real-world scenarios. I believe these skills will be valuable in future projects, business reporting, and communicating insights to both technical and non-technical audiences.
+
+::: {.callout-note title="Jianyi"}
+Please feel free to click on my LinkedIn and GitHub links for more info! <br>
+[<i class="fa-brands fa-linkedin"></i> Linkedin]() &nbsp;|&nbsp;  [<i class="fa-brands fa-github"></i> GitHub]()
+:::
+
+:::

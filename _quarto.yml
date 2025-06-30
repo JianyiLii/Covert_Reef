@@ -27,17 +27,17 @@ website:
         menu:
         - href: user_guide.qmd
           text: User Guide
-        - href: ""
+        - href: "https://jianyivaa.shinyapps.io/Shiny_CovertReef/"
           text: Shiny App
           target: _blank
       - icon: github
         text: Github
         menu: 
         - href: "https://github.com/JianyiLii/Group_Project-MC3"
-          text: Project Site
+          text: Project
           target: _blank
-        - href: "https://jianyivaa.shinyapps.io/Shiny_CovertReef/"
-          text: Shiny App
+        - href: "https://github.com/JianyiLii/Shiny_CovertReef"
+          text: Shiny
           target: _blank
 format:
   html:
