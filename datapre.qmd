@@ -1,0 +1,847 @@
+---
+title: "🌊 Data Preparation 🪸"
+format:
+  html:
+    mermaid: 
+      theme: default
+code-fold: true
+code-summary: "Show the code"
+    
+execute:
+  echo: true
+  warning: false
+  freeze: false
+
+editor: visual
+---
+
+### **Methodology**
+
+To build this prototype module, we adopted a structured visual analytics approach, starting from data ingestion to visual storytelling. The knowledge graph provided in Mini-Challenge 3 was first cleaned, transformed, and modeled using tidygraph. Communication patterns, relationships, and anomalies were then extracted through modular analysis and visualized using both static (ggplot2, ggraph) and interactive (plotly, visNetwork) tools.
+
+The overall methodology consists of the following stages:
+
+1.  `Data Preparation` We loaded and flattened the JSON-based knowledge graph, extracted nodes and edges, cleaned missing values, and validated the network structure for compatibility with tidygraph. Each entity was classified by type and sub-type to enable filtering and targeted analysis.
+
+2.  `Modular Task Execution` Each of the four investigative tasks was assigned to team member, allowing parallel and comparison development:
+
+-   Temporal trends were analyzed by aggregating communication timestamps by hour and date.
+-   Entity relationships were explored through network graph layouts and centrality measures.
+-   Anomaly detection used Z-score normalization on daily message counts.
+-   Suspicious activity was investigated through person-to-person messaging analysis.
+
+3.  `Prototype Development` All modules were translated into reactive components suitable for a Shiny application. Input widgets such as selectInput(), dateRangeInput(), and checkboxGroupInput() allow user-driven filtering, while outputs include plotlyOutput() and visNetworkOutput() for dynamic and exploratory analysis.
+
+4.  `Design and Storyboarding` A UI storyboard was drafted to guide the layout of the final Shiny app, ensuring usability and clarity. Each module was built to function independently but integrate smoothly into the full application.
+
+
+# **1.0 Installing packages**
+
+We will use the code chunk below uses p_load() of pacman package to check if packages are installed in the computer. If they are, then they will be launched into R. Though it is not added here in pacman due to conflicts, networkD3, highcharter, leaflet, conflicted will also be added on Shiny.
+
+```{r}
+#| code-fold: true 
+#| code-summary: "Show the code" 
+pacman::p_load(jsonlite, tidyverse, ggtext,   
+               knitr, lubridate, hms, scales,   
+               tidytext, tm, SnowballC,   
+              patchwork, ggraph,    
+               tidygraph, igraph, ggiraph,    
+               SmartEDA, plotly, wordcloud,    
+               ggh4x, visNetwork, RColorBrewer, 
+               circlize, ggalluvial, reactable)  
+```
+
+# **2.0 Loading Data**
+
+In the code chunk below, fromJSON() of jsonlite package was used to import mc3.json file into R and save the output object.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+mc3_data <- fromJSON("data/mc3_graph.json")
+mc3_schema <- fromJSON("data/MC3_schema.json")
+```
+
+It contains graph data, where nodes can be accessed via `nodes` and edges via `links`. This dataset had many columns but we filtered the relevant data during wrangling.
+
+## **2.1 Defining common variables**
+
+We will also set some values for consistency throughout all graphs.
+
+::: panel-tabset
+## Style and Colours
+
+```{r}
+node_legend_colors_plot <- c(
+  "Person" = "#88CCEE",
+  "Vessel" = "#D55E00",
+  "Organization" = "#117733",
+  "Location" = "#AA4499",
+  "Group"= "#CC79A7",
+  "Event" = "#DDCC77",
+  "Relationship" = "#AF8DC3",
+  "Nadia Conti" = "red"
+)
+
+node_legend_shapes_plot <- c(
+  "Person" = "dot",
+  "Vessel" = "triangle",
+  "Organization" = "square",
+  "Location" = "diamond",
+  "Group" = "circle plus",
+  "Event" = "star",
+  "Relationship" = "square x",
+  "Nadia Conti" = "star"
+)
+
+STYLES <- list(
+  node_label_dark = "black",
+  font_family = "Roboto Condensed"
+)
+```
+:::
+
+## **2.2 Inspecting knowledge graph structure**
+
+In the code chunk below glimpse() is used to reveal the structure of mc3_data knowledge graph.
+
+::: panel-tabset
+## The Code
+
+``` r
+glimpse(mc3_data)
+```
+
+## The Result
+
+```{r, echo=FALSE}
+glimpse(mc3_data)
+```
+:::
+
+## **2.3 Extracting the edges and nodes tables**
+
+Next, `as_tibble()` of **tibble** package package is used to extract the nodes and links tibble data frames from *mc3* tibble dataframe into two separate tibble dataframes called *mc3_nodes_raw* and *mc3_edges_raw* respectively.
+
+::: panel-tabset
+## The Code
+
+```{r}
+mc3_nodes_raw <- as_tibble(mc3_data$nodes)
+mc3_edges_raw <- as_tibble(mc3_data$edges)
+```
+
+We also looked into the nodes and edges structure.
+
+## Nodes structure
+
+```{r}
+ExpData(data=mc3_nodes_raw,type=2)
+```
+
+## Edges structure
+
+```{r}
+ExpData(data=mc3_edges_raw,type=2)
+```
+:::
+
+# **3.0 Initial EDA for Nodes and Edges**
+
+## **3.1 Nodes via Shiny**
+
+::: panel-tabset
+## Nodes
+
+In the code chunk below, ExpCatViz() of SmartEDA package is used to reveal the frequency distribution of all categorical fields in mc3_nodes tibble dataframe.
+
+```{r}
+library(shiny)
+library(ggplot2)
+
+# Run ExpCatViz once at the top to avoid recomputing
+ExpCatViz(data=mc3_nodes_raw,
+          col="navyblue")
+
+```
+
+## Drilling into Node sub_type
+
+Code chunk below uses ggplot2 functions to reveal the frequency distribution of *sub_type* field of *mc3_nodes_raw*.
+
+```{r}
+# Step 1: Count and reorder
+mc3_nodes_ordered <- mc3_nodes_raw %>%
+  count(sub_type) %>%
+  arrange((n)) %>%
+  mutate(sub_type = factor(sub_type, levels = sub_type))
+
+# Step 2: Plot with navy bars, sorted, and horizontal
+ggplot(mc3_nodes_ordered, aes(x = sub_type, y = n)) +
+  geom_col(fill = "navy") +
+  coord_flip() +
+  labs(x = "Sub_type", y = "Count",
+    title = "Distribution of Subtypes") +
+  theme_minimal()
+```
+
+## Entity subtypes
+
+In the code chunk below, the Entity subtypes are filtered.
+
+```{r}
+# Step 1: Filter for type == "Entity", count sub_type, sort 
+relationship_subtypes <- mc3_nodes_raw %>%
+  filter(type == "Entity") %>%
+  count(sub_type) %>%
+  arrange(n) %>%
+  mutate(sub_type = factor(sub_type, levels = sub_type)) 
+
+# Step 2: Plot
+ggplot(relationship_subtypes, aes(x = sub_type, y = n)) +
+  geom_col(fill = "navy") +
+  coord_flip() +
+  labs(
+    x = "Entity Subtype",
+    y = "Count",
+    title = "Distribution of Entity Subtypes"
+  ) +
+  theme_minimal()
+```
+
+## Event subtypes
+
+In the code chunk below, the Event subtypes are filtered.
+
+```{r}
+# Step 1: Filter for type == "Event", count sub_type, sort 
+relationship_subtypes <- mc3_nodes_raw %>%
+  filter(type == "Event") %>%
+  count(sub_type) %>%
+  arrange(n) %>%
+  mutate(sub_type = factor(sub_type, levels = sub_type)) 
+
+# Step 2: Plot
+ggplot(relationship_subtypes, aes(x = sub_type, y = n)) +
+  geom_col(fill = "navy") +
+  coord_flip() +
+  labs(
+    x = "Event Subtype",
+    y = "Count",
+    title = "Distribution of Event Subtypes"
+  ) +
+  theme_minimal()
+```
+
+## Relationship subtypes
+
+In the code chunk below, the relationship subtypes are filtered.
+
+```{r}
+# Step 1: Filter for type == "Relationship", count sub_type, sort 
+relationship_subtypes <- mc3_nodes_raw %>%
+  filter(type == "Relationship") %>%
+  count(sub_type) %>%
+  arrange(n) %>%
+  mutate(sub_type = factor(sub_type, levels = sub_type))
+
+# Step 2: Plot
+ggplot(relationship_subtypes, aes(x = sub_type, y = n)) +
+  geom_col(fill = "navy") +
+  coord_flip() +
+  labs(
+    x = "Relationship Subtype",
+    y = "Count",
+    title = "Distribution of Relationship Subtypes"
+  ) +
+  theme_minimal()
+```
+:::
+
+## 3.1.1 Findings from EDA
+
+::: panel-tabset
+## Nodes
+
+We will use the EDA findings to determine data to focus on or eliminate. From the bar charts and the original data on mc3_nodes_raw, it was observed that:
+
+-   Nodes were one of three types (Entity, Event, Relationship), where each of these types have their sub_types. Majority were of event type, followed by relationship, and entity.
+
+    -   There were 25 subtypes. Communications made up the bulk of the sub_type for Events. Coordinates made up the bulk of the sub_type for Relationship. The additional node sub_types not mentioned in the VAST 2025 MC3 Data Description under Node Attributes were: fishing, communication and coordinates.
+
+## Event Types
+
+-   Observations of EDA from Event types:
+
+    -   `Findings` field were filled when there were `monitoring_type`.
+
+    -   `Content` refers to radio communication content.
+
+    -   `Results` field were filled when there were `assessment_type` performed.
+
+    -   When there is an `enforcement_type` of enforcement operations or warnings, there might be an `outcome` at times.
+
+    -   When there is a `movement_type`, there might be a place of `destination` at times.
+
+## Relationship Types
+
+-   Observations of EDA from Relationship types:
+
+    -   When the subtype was coordinate, there were data in the field named `coordination_types`.
+
+    -   When the subtype was operate, there were data in the field named `operational_roles`.
+
+    -   When there is a `jurisdiction_type`, there might be an `authority_level`.
+
+    -   There are only restricted or special access data within `permission_types`.
+
+    -   When there is a `report_type` of data transmission or environmental report, there might be a `submission_date`.
+
+## Entity Types
+
+-   Observations of EDA from Entity types:
+
+    -   The 5 id under Group sub-types were not very useful information.
+
+## Course of Action
+
+-   Elimination and directed focus:
+
+    -   Relative to the entire dataset, there were little `assessment_type` (3%), `movement_type` (2%), `enforcement_type` (2%), `permission_type` (4%), `report_type` (2%), `authority_level` (1%). We will direct our focus on other areas instead of these.
+
+    -   There were no to little useful data in the fields named: `activity_type`, `references`, `dates`, `time`, and `friendship_type`. These were not utilised.
+
+    -   We directed our focus on Event_Communication, Event_Monitoring, and Event_VesselMovement.
+:::
+
+## **3.2 Edges**
+
+The code chunk below used ExpCATViz() of SmartEDA package to reveal the frequency distribution of all categorical fields in mc3_edges_raw tibble dataframe.
+
+::: panel-tabset
+## Frequency Distribution of Categorical Fields
+
+```{r}
+ExpCatViz(data=mc3_edges_raw,
+          col="navyblue")
+```
+
+Entities are connected by edges to other Entities via an Event or Relationship node. The one exception to this is the Communication Event subtype, which is additionally linked to either an Event or Relationship node. The type field denotes the connector or edge type for the Entities, Event, and Relationship nodes. The edges are one of these: received, evidence_for, sent, NA.
+
+## Filter by type == sent
+
+```{r}
+# Step 1: Filter for type == "sent"
+filtered_edges <- mc3_edges_raw %>%
+  filter(type == "sent") %>%
+  count(source) %>%
+  arrange(desc(n)) %>%
+  mutate(source = factor(source, levels = rev(unique(source))))  # descending 
+
+# Step 2: Plot
+ggplot(filtered_edges, aes(x = source, y = n)) +
+  geom_col(fill = "navy") +
+  coord_flip() +
+  labs(
+    title = "Distribution of 'sent' Edges type by Source",
+    x = "Source",
+    y = "Count"
+  ) +
+  theme_minimal()
+```
+:::
+
+**What we understood from the information provided by Vast Challenge on Directional Edges:**
+
+-   For relationship as colleagues node or friends node, the node will have arrows/ edges pointing towards the relationship node.
+
+-   For other relationships and events, the direction would be following the source and target.
+
+# **4.0 Data Preparation**
+
+## **4.1 Data Cleaning and Wrangling**
+
+::: panel-tabset
+## Cleaning and wrangling nodes
+
+-   convert values in id field into character data type,
+
+-   exclude records with `id` value are na,
+
+-   exclude records with similar id values,
+
+-   exclude `thing_collected` , `time` , `date`, `friendship_type` field, and
+
+-   save the cleaned tibble dataframe into a new tibble datatable called `mc3_nodes_cleaned`.
+
+```{r}
+mc3_nodes_cleaned <- mc3_nodes_raw %>%
+  mutate(id = as.character(id)) %>%
+  filter(!is.na(id)) %>%
+  distinct(id, .keep_all = TRUE) %>%
+  select(-thing_collected, -time, -date, -friendship_type)
+```
+
+## Unique Node Count
+
+```{r, echo=FALSE}
+# Find the number of unique types in each column and sort descending
+unique_counts <- mc3_nodes_cleaned %>%
+  summarise_all(n_distinct) %>%
+  pivot_longer(cols = everything(), names_to = "column", values_to = "unique_count") %>%
+  arrange(desc(unique_count))  # sort by unique_count in descending order
+
+# Print the result
+print(unique_counts)
+```
+
+## Cleaning and wrangling edges
+
+-   renamed `source` and `target` fields to `from_id` and `to_id` respectively,
+
+-   converted values in `from_id` and `to_id` fields to character data type,
+
+-   excluded values in `from_id` and `to_id` which not found in the id field of mc3_nodes_cleaned,
+
+-   excluded records whereby `from_id` and/or `to_id` values are missing, and
+
+-   saved the cleaned tibble dataframe and called it mc3_edges_cleaned.
+
+```{r}
+mc3_edges_cleaned <- mc3_edges_raw %>%
+  rename(from_id = source,
+         to_id = target) %>%
+  mutate(across(c(from_id, to_id), as.character)) %>%
+  # Parse to_id to get supertype and sub_type for target nodes (e.g., Event_Communication)
+  separate(to_id, into = c("to_id_supertype", "to_id_sub_type", "to_id_num"),
+           sep = "_", remove = FALSE, fill = "right", extra = "merge") %>%
+  # Filter to ensure from_id and to_id exist in mc3_nodes_cleaned (prevent orphaned edges)
+  filter(from_id %in% mc3_nodes_cleaned$id,
+         to_id %in% mc3_nodes_cleaned$id) %>%
+  filter(!is.na(from_id), !is.na(to_id))
+
+print("Columns in mc3_edges_cleaned after initial cleaning:")
+print(colnames(mc3_edges_cleaned))
+print("Head of mc3_edges_cleaned after initial cleaning:")
+print(head(mc3_edges_cleaned))
+
+```
+
+## Unique Edges Count
+
+```{r}
+# Find the number of unique types in each column
+unique_counts <- mc3_edges_cleaned %>%
+  summarise_all(n_distinct) %>%
+  pivot_longer(cols = everything(), names_to = "column", values_to = "unique_count")
+
+# Print the unique counts for each column
+print(unique_counts)
+```
+
+## Other preparatory work
+
+Next, code chunk below will be used to create mapping of character id in mc3_nodes_cleaned to row index
+
+```{r}
+node_index_lookup <- mc3_nodes_cleaned %>%
+  mutate(.row_id = row_number()) %>%
+  select(id, .row_id)
+```
+
+Next, the code chunk below was used to join and convert `from_id` and `to_id` to integer indices. At the same time we also dropped rows with unmatched nodes.
+
+```{r}
+mc3_edges_indexed <- mc3_edges_cleaned %>%
+  left_join(node_index_lookup, by = c("from_id" = "id")) %>%
+  rename(from = .row_id) %>%
+  left_join(node_index_lookup, by = c("to_id" = "id")) %>%
+  rename(to = .row_id) %>%
+  # Filter out edges where either source or target node was not found
+  filter(!is.na(from) & !is.na(to)) %>%
+  # Select all columns to carry forward to mc3_edges_final
+  select(from, to, id, is_inferred, type, # Original edge attributes
+         from_id, to_id, to_id_supertype, to_id_sub_type, to_id_num # Original IDs and parsed target type
+         )
+```
+
+Next the code chunk below was used to subset nodes to only those referenced by edges.
+
+```{r}
+used_node_indices <- sort(unique(c(mc3_edges_indexed$from, mc3_edges_indexed$to)))
+mc3_nodes_final <- mc3_nodes_cleaned %>%
+  slice(used_node_indices) %>%
+  mutate(new_index = row_number())
+```
+
+We then used the code chunk below to rebuild lookup from old index to new index.
+
+```{r}
+old_to_new_index <- tibble(
+  old_index = used_node_indices,
+  new_index = seq_along(used_node_indices)
+)
+```
+
+Lastly, the code chunk below was used to update edge indices to match new node table.
+
+```{r}
+mc3_edges_final <- mc3_edges_indexed %>%
+  left_join(old_to_new_index, by = c("from" = "old_index")) %>%
+  rename(from_new = new_index) %>%
+  left_join(old_to_new_index, by = c("to" = "old_index")) %>%
+  rename(to_new = new_index) %>%
+  # Explicitly select all columns that are needed downstream
+  select(from = from_new, to = to_new,
+         id, is_inferred, type,
+         from_id, to_id, to_id_supertype, to_id_sub_type, to_id_num)
+```
+:::
+
+## **4.2 Building the tidygraph object**
+
+::: panel-tabset
+## Build the object-tbl_graph
+
+```{r}
+mc3_graph <- tbl_graph(
+  nodes = mc3_nodes_final,
+  edges = mc3_edges_final,
+  directed = TRUE
+)
+```
+
+## Examining the object
+
+```{r}
+str(mc3_graph)
+```
+:::
+
+# **5.0 Knowledge Graphs**
+
+## **VisNetwork**
+
+VisNetwork provides the user to understand relationships through interactivity. For instance:
+
+-   The individual nodes can be selected from the drop-down menu to view its connected nodes and edges.
+
+-   The hover tooltip provides additional details from fields such as content, coordination_type, findings, destination, operational_role, results, and jurisdiction_type based on the related id information from mc3_nodes_final.
+
+## The Graph- VisNetwork
+
+::: no-code-fold
+```{r, echo=FALSE}
+
+# ---- 1. Define styles and legends ----
+
+event_subtypes <- c(
+  "Communication", "Monitoring", "VesselMovement", "Assessment",
+  "Collaborate", "Endorsement", "TourActivity", "TransponderPing",
+  "Harbor Report", "Fishing", "Criticize"
+)
+
+relationship_subtypes <- c(
+  "Coordinates", "AccessPermission", "Operates", "Colleagues",
+  "Suspicious", "Reports", "Jurisdiction", "Unfriendly", "Friends"
+)
+
+node_legend_colors_plot <- c(
+  "Person" = "#88CCEE",
+  "Vessel" = "#D55E00",
+  "Organization" = "#117733",
+  "Location" = "#AA4499",
+  "Group"= "#CC79A7",
+  "Event" = "#DDCC77",         # type level
+  "Relationship" = "#AF8DC3"   # type level
+)
+
+node_legend_shapes_plot <- c(
+  "Person" = "dot",
+  "Vessel" = "triangle",
+  "Organization" = "square",
+  "Location" = "diamond",
+  "Group" = "circle plus",
+  "Event" = "star",              # type level
+  "Relationship" = "square x"    # type level
+)
+
+STYLES <- list(
+  node_label_dark = "black",
+  font_family = "Roboto Condensed"
+)
+
+# ---- 2. Prepare nodes ----
+nodes <- mc3_nodes_final %>%
+  mutate(
+    label = ifelse(is.na(name), id, name),
+    
+    # These parts are for pulling the related data from other fields
+    tooltip_extra = case_when(
+      type == "Event" & sub_type == "Communication" ~ content,
+      type == "Event" & sub_type == "Monitoring" ~ findings,
+      type == "Event" & sub_type == "VesselMovement" ~ destination,
+      type == "Event" & sub_type == "Assessment" ~ results,
+      type == "Relationship" & sub_type == "Coordinates" ~ coordination_type,
+      type == "Relationship" & sub_type == "Operates" ~ operational_role,
+      type == "Relationship" & sub_type == "Jurisdiction" ~ jurisdiction_type,
+      TRUE ~ NA_character_
+    ),
+    
+    title = paste0(
+      "<b>", label, "</b><br>",
+      "Type: ", type, "<br>",
+      "Sub-type: ", sub_type, "<br>",
+      ifelse(!is.na(tooltip_extra), paste0("<br><b>Details:</b> ", tooltip_extra), "")
+    ),
+    
+    # Fallback logic: if sub_type is NA or not in styling list, use type instead
+    group = ifelse(sub_type %in% names(node_legend_colors_plot), sub_type, type)
+  ) %>%
+  select(id, label, group, title) %>%
+  distinct()
+
+# ---- 3. Prepare directed edges (type == "sent") ----
+
+edges <- mc3_edges_final %>%
+  filter(from_id %in% nodes$id & to_id %in% nodes$id) %>%
+  select(from = from_id, to = to_id)
+
+# ---- 4. Build visNetwork ----
+
+net <- visNetwork(nodes, edges, width = "100%", height = "600px") %>%
+  visEdges(arrows = list(to = list(enabled = TRUE, scaleFactor = 1.5))) %>%
+  visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
+  visIgraphLayout(layout = "layout_with_fr") %>%
+  visNodes(font = list(
+    size = 14,
+    color = STYLES$node_label_dark,
+    face = STYLES$font_family,
+    vadjust = -15
+  ))
+
+# ---- 5. Apply shape and color per group ----
+
+for (group_name in names(node_legend_colors_plot)) {
+  net <- net %>% visGroups(
+    groupname = group_name,
+    color = node_legend_colors_plot[[group_name]],
+    shape = node_legend_shapes_plot[[group_name]]
+  )
+}
+# ---- 6. Add legend ----
+
+used_groups <- unique(nodes$group)
+
+legend_df <- tibble::tibble(
+  label = used_groups,
+  shape = node_legend_shapes_plot[used_groups],
+  color = node_legend_colors_plot[used_groups]
+) %>%
+  distinct(label, .keep_all = TRUE)  # remove duplicates just in case
+
+net <- net %>% visLegend(
+  addNodes = legend_df,
+  ncol = 2,                         # number of columns
+  position = "left",              
+  main = "Entity (Sub)Types",      # title
+  useGroups = FALSE                # show custom legend entries
+)
+# ---- 7. Render ----
+net
+
+```
+:::
+
+```{r, results=FALSE}
+#| code-fold: true
+#| code-summary: "Show the code"
+# ---- 1. Define styles and legends ----
+
+event_subtypes <- c(
+  "Communication", "Monitoring", "VesselMovement", "Assessment",
+  "Collaborate", "Endorsement", "TourActivity", "TransponderPing",
+  "Harbor Report", "Fishing", "Criticize"
+)
+
+relationship_subtypes <- c(
+  "Coordinates", "AccessPermission", "Operates", "Colleagues",
+  "Suspicious", "Reports", "Jurisdiction", "Unfriendly", "Friends"
+)
+
+node_legend_colors_plot <- c(
+  "Person" = "#88CCEE",
+  "Vessel" = "#D55E00",
+  "Organization" = "#117733",
+  "Location" = "#AA4499",
+  "Group"= "#CC79A7",
+  "Event" = "#DDCC77",         # type level
+  "Relationship" = "#AF8DC3"   # type level
+)
+
+node_legend_shapes_plot <- c(
+  "Person" = "dot",
+  "Vessel" = "triangle",
+  "Organization" = "square",
+  "Location" = "diamond",
+  "Group" = "circle plus",
+  "Event" = "star",              # type level
+  "Relationship" = "square x"    # type level
+)
+
+STYLES <- list(
+  node_label_dark = "black",
+  font_family = "Roboto Condensed"
+)
+
+# ---- 2. Prepare nodes ----
+nodes <- mc3_nodes_final %>%
+  mutate(
+    label = ifelse(is.na(name), id, name),
+    
+    # These parts are for pulling the related data from other fields
+    tooltip_extra = case_when(
+      type == "Event" & sub_type == "Communication" ~ content,
+      type == "Event" & sub_type == "Monitoring" ~ findings,
+      type == "Event" & sub_type == "VesselMovement" ~ destination,
+      type == "Event" & sub_type == "Assessment" ~ results,
+      type == "Relationship" & sub_type == "Coordinates" ~ coordination_type,
+      type == "Relationship" & sub_type == "Operates" ~ operational_role,
+      type == "Relationship" & sub_type == "Jurisdiction" ~ jurisdiction_type,
+      TRUE ~ NA_character_
+    ),
+    
+    title = paste0(
+      "<b>", label, "</b><br>",
+      "Type: ", type, "<br>",
+      "Sub-type: ", sub_type, "<br>",
+      ifelse(!is.na(tooltip_extra), paste0("<br><b>Details:</b> ", tooltip_extra), "")
+    ),
+    
+    # Fallback logic: if sub_type is NA or not in styling list, use type instead
+    group = ifelse(sub_type %in% names(node_legend_colors_plot), sub_type, type)
+  ) %>%
+  select(id, label, group, title) %>%
+  distinct()
+
+# ---- 3. Prepare directed edges (type == "sent") ----
+
+edges <- mc3_edges_final %>%
+  filter(from_id %in% nodes$id & to_id %in% nodes$id) %>%
+  select(from = from_id, to = to_id)
+
+# ---- 4. Build visNetwork ----
+
+net <- visNetwork(nodes, edges, width = "100%", height = "600px") %>%
+  visEdges(arrows = list(to = list(enabled = TRUE, scaleFactor = 1.5))) %>%
+  visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
+  visIgraphLayout(layout = "layout_with_fr") %>%
+  visNodes(font = list(
+    size = 14,
+    color = STYLES$node_label_dark,
+    face = STYLES$font_family,
+    vadjust = -15
+  ))
+
+# ---- 5. Apply shape and color per group ----
+
+for (group_name in names(node_legend_colors_plot)) {
+  net <- net %>% visGroups(
+    groupname = group_name,
+    color = node_legend_colors_plot[[group_name]],
+    shape = node_legend_shapes_plot[[group_name]]
+  )
+}
+# ---- 6. Add legend ----
+
+used_groups <- unique(nodes$group)
+
+legend_df <- tibble::tibble(
+  label = used_groups,
+  shape = node_legend_shapes_plot[used_groups],
+  color = node_legend_colors_plot[used_groups]
+) %>%
+  distinct(label, .keep_all = TRUE)  # remove duplicates just in case
+
+net <- net %>% visLegend(
+  addNodes = legend_df,
+  ncol = 2,                         # number of columns
+  position = "left",              
+  main = "Entity (Sub)Types",      # title
+  useGroups = FALSE                # show custom legend entries
+)
+# ---- 7. Render ----
+net
+
+```
+
+# **6.0 Further Checking and Cleaning Data**
+
+::: panel-tabset
+## 6.1 Checking Nodes
+
+Check if mapping is correct for type and sub_type.
+
+```{r}
+mc3_nodes_cleaned %>%
+  group_by(type, sub_type) %>%
+  summarize(count = n()) %>%
+  arrange(-count) %>%
+  kable()
+```
+
+## 6.2.1 Cleaning Edges
+
+```{r}
+# Split the 'from_id' column
+mc3_edges_cleaned <- mc3_edges_cleaned %>%
+  separate(from_id, into = c("from_id_supertype", "from_id_sub_type", "from_id_id"), sep = "_", remove = FALSE, extra = "drop")
+
+# Split the 'target' column into 
+mc3_edges_cleaned <- mc3_edges_cleaned %>%
+  separate(to_id, into = c("to_id_supertype", "to_id_sub_type","to_id_id"), sep = "_", remove = FALSE, extra = "drop")
+
+# Find the number of unique types in each column
+unique_counts <- mc3_edges_cleaned %>%
+  summarise_all(n_distinct) %>%
+  pivot_longer(cols = everything(), names_to = "column", values_to = "unique_count")
+
+# Print the unique counts for each column
+print(unique_counts)
+```
+
+## 6.2.2 Checking Edges
+
+```{r}
+# Check the mapping
+mc3_edges_cleaned %>%
+  group_by(from_id_supertype, from_id_sub_type) %>%
+  summarize(count = n()) %>%
+  arrange(-count) %>%
+  kable()
+
+# Check the mapping
+mc3_edges_cleaned %>%
+  group_by(to_id_supertype, to_id_sub_type) %>%
+  summarize(count = n()) %>%
+  arrange(-count) %>%
+  kable()
+```
+
+**Under Event-Communication types:** The edges target type and target subtypes matches the count of 584 for node to_id_supertype and node to_id_sub_type. However, there were only 581 count for content within the original node file. We then looked into duplicates.
+
+## 6.3 Checking for Duplicates
+
+```{r}
+# checking for duplicates
+duplicate_values1 <- mc3_nodes_cleaned %>%
+  count(content) %>%
+  filter(n > 1)
+
+# View duplicates
+print(duplicate_values1)
+```
+
+There were 4 duplicates within the content column. Upon checking the original data, one was the sender and the other was the receiver who received the same content. We left the data as it was.
+:::

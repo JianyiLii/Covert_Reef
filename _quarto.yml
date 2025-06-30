@@ -8,14 +8,13 @@ website:
       - href: proposal.qmd
         text: Proposal
         icon: files
-      - text: "{{< fa diagram-project >}} Methodology" 
-        menu:
-        - methodology/1.qmd
-        - methodology/2.qmd
-        - methodology/3.qmd
-      - href: findings.qmd
-        text: Findings
+      - href: datapre.qmd
+        text: "{{< fa diagram-project >}} Methodology" 
+      - text: Findings
         icon: journal-text
+        menu: 
+          - intro.qmd
+          - tasks.qmd
       - href: poster.qmd
         text: "{{< fa file-powerpoint >}} Poster"
       - href: meeting_minutes.qmd
