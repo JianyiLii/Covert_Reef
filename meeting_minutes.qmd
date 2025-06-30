@@ -1,5 +1,5 @@
 ---
-title: "Meeting Minutes"
+title: "🌊 `Meeting Minutes` 🪸"
 format: html
 ---
 

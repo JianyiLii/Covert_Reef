@@ -1,5 +1,5 @@
 ---
-title: "`🌊 Covert Reef Team Members 🪸`"
+title: "🌊 `Covert Reef Team Members` 🪸"
 format: 
   html:
     allow-html: true

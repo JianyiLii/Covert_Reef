@@ -1,5 +1,5 @@
 ---
-title: "🌊 Data Preparation 🪸"
+title: "🌊 `Data Preparation` 🪸"
 format:
   html:
     mermaid: 
@@ -33,7 +33,6 @@ The overall methodology consists of the following stages:
 3.  `Prototype Development` All modules were translated into reactive components suitable for a Shiny application. Input widgets such as selectInput(), dateRangeInput(), and checkboxGroupInput() allow user-driven filtering, while outputs include plotlyOutput() and visNetworkOutput() for dynamic and exploratory analysis.
 
 4.  `Design and Storyboarding` A UI storyboard was drafted to guide the layout of the final Shiny app, ensuring usability and clarity. Each module was built to function independently but integrate smoothly into the full application.
-
 
 # **1.0 Installing packages**
 
