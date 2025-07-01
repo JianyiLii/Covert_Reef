@@ -60,14 +60,11 @@ STYLES <- list(
 )
 ```
 
-
 ```{r}
 #| echo: false
 mc3_nodes_raw <- as_tibble(mc3_data$nodes)
 mc3_edges_raw <- as_tibble(mc3_data$edges)
 ```
-
-
 
 ```{r}
 #| echo: false
@@ -682,7 +679,6 @@ print(knitr::kable(head(other_communications_df %>%
                    format = "markdown", align = "l"))
 ```
 
-
 ```{r}
 #| echo: false
 #| output: false
@@ -715,8 +711,7 @@ ggraph(g, layout = "fr") +
        color = "Community")
 ```
 
-# `Question 1`
-
+# Question 1
 
 ### 1.1 Static Chord Diagram- All Communicators
 
@@ -812,9 +807,7 @@ legend(
 
 ```
 
-
 ::: {.callout-note title="Findings"}
-
 The thickness of each ribbon (chord) represents the magnitude of the relationship. A thicker ribbon represents more frequent communications (sent + received) between a sender and recipient.
 
 Here, we have an overview of paired communicators who have higher frequencies. We also can see the links between communicators. These are the entities who communicated frequently with others that we might want to focus on:
@@ -828,10 +821,10 @@ Here, we have an overview of paired communicators who have higher frequencies. W
 -   Location: Himark Habor
 
 -   Group: N/A
-
 :::
 
 ### 1.2 Interactive Chord Diagram by Community
+
 Here, the interactive chord diagram showed the correspondences among communities at every two hour intervals.
 
 ```{r}
@@ -841,7 +834,6 @@ community_df <- g %>%
   as_tibble() %>%
   select(name, community)
 ```
-
 
 ```{r, echo=TRUE, message=FALSE, warning=FALSE}
 #| code-fold: true
@@ -1092,9 +1084,7 @@ browsable(
 )
 ```
 
-
-::: {.callout-note title="1.2 Findings"} 
-
+::: {.callout-note title="1.2 Findings"}
 We noticed some cross community direct and indirect communication occured mainly among influential nodes, suggesting collaboration. These are **some** sample linkages with arrows regardless of sent or received:
 
 +-----------------------+-------------------------------------------------------------+
@@ -1134,11 +1124,9 @@ We noticed some cross community direct and indirect communication occured mainly
 |                       |                                                             |
 |                       | Oceanus City Council -\> Liam -\> Nadia                     |
 +-----------------------+-------------------------------------------------------------+
-
 :::
 
 We also noticed that at times, certain individuals sent messages but there were no response back. This could possibly be due to the pseudonyms being used to send or reply to the same content. For instance, there was a message from Davis to Rodriguez on 14 Oct around 1200-1400 but there was no response by Rodriguez. By looking at the content field, we then found out that he was Small Fry due to the responses he provided to Davis which was originally addressed to Rodriguez.
-
 
 ### 1.3 Heatmap of Correspondences
 
@@ -1193,7 +1181,7 @@ ggplot(adj_df, aes(x = recipient_name, y = sender_name, fill = count)) +
 
 ## The Code
 
-``` {r}
+```{r}
 #| echo: true
 #| eval: false
 # Step 1: Count interactions
@@ -1242,7 +1230,6 @@ ggplot(adj_df, aes(x = recipient_name, y = sender_name, fill = count)) +
 :::
 
 ::: {.callout-note title="1.3 Findings"}
-
 After extraction of the entities who communicated frequently (from the Static Chord Diagram), we tabled who they communicated with by using the heatmap. E.g. Name1 communicated with Name2.
 
 +----------------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -1270,13 +1257,11 @@ After extraction of the entities who communicated frequently (from the Static Ch
 +----------------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Location       | Himark Habor         | Oceanus City Council, Mako, Serenity, Marlin                                                                                                              |
 +----------------+----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
-
 :::
 
 ### 1.4 Heatmap of date and hours
 
 ::: panel-tabset
-
 ## Heatmap of date and hours
 
 ```{r, message=FALSE, warning=FALSE}
@@ -1349,7 +1334,9 @@ ggplot(heatmap_data, aes(x = hour, y = date, fill = n)) +
   )
 
 ```
+
 ## The code
+
 ```{r, message=FALSE, warning=FALSE}
 #| echo: true
 #| eval: false
@@ -1428,7 +1415,6 @@ ggplot(heatmap_data, aes(x = hour, y = date, fill = n)) +
 ### 1.5 Hourly Communication Patterns: Week 1 vs Week 2
 
 ::: panel-tabset
-
 ## Compare the communication pattern
 
 ```{r}
@@ -1479,8 +1465,8 @@ ggplot(week_patterns, aes(x = hour, y = proportion, color = week)) +
 
 ```
 
-
 ## The code
+
 ```{r}
 #| echo: true 
 #| eval: false
@@ -1527,11 +1513,9 @@ ggplot(week_patterns, aes(x = hour, y = proportion, color = week)) +
   )
 
 ```
-
 :::
 
 ::: {.callout-note title="Findings"}
-
 The visualization of hourly communication patterns reveals that message activity in Oceanus follows a pronounced daily cycle, with distinct peaks and lows across both observed weeks.
 
 In Week 1, communication is highly concentrated in the morning hours, particularly between 8 AM and 12 PM, where a majority of the messages are exchanged.
@@ -1539,17 +1523,15 @@ In Week 1, communication is highly concentrated in the morning hours, particular
 By contrast, Week 2 shows a broader distribution of communication throughout the day, with notable increases in afternoon and evening activity.
 
 This shift suggests that while the first week’s communications were more focused and possibly related to regular planning or operational updates, the second week’s patterns reflect heightened activity or more dynamic coordination, potentially due to emergent events or increased urgency among entities.
-
 :::
 
-#  `Question 2`
+# Question 2
 
-###  `Question 2a)`
+### Question 2a)
 
 ### 2.1 Unique count from each sender subtype
 
-::: panel-tabset
-
+:::: panel-tabset
 ## Unique Count
 
 ```{r, echo=FALSE}
@@ -1567,7 +1549,7 @@ print(sender_names_by_type)
 
 ## The Code
 
-``` {r}
+```{r}
 #| echo: true
 #| eval: false
 sender_names_by_type <- other_communications_df %>%
@@ -1582,17 +1564,14 @@ sender_names_by_type <- other_communications_df %>%
 print(sender_names_by_type)
 ```
 
-:::{.callout-note}
+::: callout-note
 There were no Group sub-type as confirmed by this filtered table.
 :::
-
-:::
+::::
 
 ## 2.2 People and Vessels
 
-
 ### 2.2.1 Filter by Vessel and Person only
-
 
 ```{r}
 person_vessel_df <- other_communications_df %>%
@@ -1603,7 +1582,6 @@ person_vessel_df <- other_communications_df %>%
     (sender_sub_type == "Vessel" & recipient_sub_type == "Vessel")
   )
 ```
-
 
 ### 2.2.2 Plotted Timeline- People & Vessels
 
@@ -1683,7 +1661,6 @@ ggplotly(p, tooltip = "tooltip_text")
 #### 2.2.3 Findings on People/ Vessels:
 
 ::: {.callout-note title="Findings"}
-
 -   Core logic:
 
     -   If two names appear as sender and recipient in the same message, they cannot belong to the same person — i.e., they're not aliases of each other.
@@ -1703,12 +1680,9 @@ ggplotly(p, tooltip = "tooltip_text")
 -   Select only The Lookout and Sam: on 7 Oct Sam asked Kelly to get information on who authorized the permit. 2 minutes later, The Lookout (Kelly) responded to The Intern (Sam), that it was signed by Jensen from City Council.
 
 -   Seawatch only appeared on 10 Oct but Horizon talked to Seawatch on 8 Oct. Therefore, some other entity is Seawatch before or during 8 Oct. Defender told Seawatch on 3 Oct at 8.39am that it increased its patrol and informed Seawatch to maintain vigilance. The Lookout (Seawatch) responded to Sentinel (Defender) at 8.41am that it acknowledged the need for vigilance.
-
-
 :::
 
-
-### `Question 2b)`
+### Question 2b)
 
 ### 2.3 Centrality Measure- People & Vessels
 
@@ -1743,7 +1717,6 @@ ggraph(g_pv, layout = "fr") +
 ```
 
 ::: panel-tabset
-
 ## PageRank Centrality Algorithm
 
 ```{r, echo=FALSE}
@@ -1783,7 +1756,7 @@ ggraph(g_pv, layout = "fr") +
 
 ## The Code
 
-``` {r}
+```{r}
 #| echo: true 
 #| eval: false
 set.seed(1234)
@@ -1816,7 +1789,6 @@ ggraph(g_pv, layout = "fr") +
 :::
 
 ::: {.callout-note title="2.3.1 Findings:"}
-
 -   There were 5 closely associated groups. Community 5 (Clepper and Miranda) appeared to be segmented from the central group, due to the non-involvement from the nature of their investigative work.
 -   From the graph, we extracted the 8 influential nodes to focus on:
     -   Community 1: Mako
@@ -1824,7 +1796,6 @@ ggraph(g_pv, layout = "fr") +
     -   Community 3: N/A as they were not very influential at global level
     -   Community 4: Mrs. Money, Boss, The Middleman
     -   Community 5: N/A as they were not very influential at global level
-    
 :::
 
 ### 2.4 Wordclouds- Bigrams
@@ -1832,10 +1803,9 @@ ggraph(g_pv, layout = "fr") +
 We focused on bigrams here to get more contextual data from two instead of one word.
 
 ::: panel-tabset
-
 ## The Wordclouds
 
-``` {r}
+```{r}
 #| echo: false
 #| output: false
 # 1. Extract node community assignments
@@ -1910,7 +1880,7 @@ for (i in sort(valid_communities)) {
 
 ## The Code
 
-``` {r}
+```{r}
 #| echo: true 
 #| eval: false
 # 5b. Plot word clouds per community
@@ -1934,13 +1904,11 @@ for (i in sort(valid_communities)) {
   mtext(paste("Community", i), side = 3, line = 1, adj = 0.5, cex = 1.5, col = "black")
 }
 ```
-
 :::
 
 ### 2.5 Circular barchart for Top Bigrams per Community
 
 ::: panel-tabset
-
 ## The Circular Barchart
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, `fig-width`=8, `fig-height`=8}
@@ -2097,7 +2065,7 @@ print(p)
 
 ## The Code
 
-``` {r}
+```{r}
 #| echo: true 
 #| eval: false 
 set.seed(1234)
@@ -2251,7 +2219,6 @@ p <- ggplot(plot_data, aes(x = id, y = n, fill = community)) + # <--- x = id (nu
 
 print(p)
 ```
-
 :::
 
 ### 2.6 Community Group Membership- People & Vessels
@@ -2299,7 +2266,7 @@ kable(grouped_members, caption = "Community Group Membership Summary", align = "
 
 ## The Code
 
-``` {r}
+```{r}
 #| echo: true 
 #| eval: false 
 set.seed(1234)
@@ -2336,11 +2303,9 @@ grouped_members <- g_pv %>%
 # Show the summary table in a clean format
 kable(grouped_members, caption = "Community Group Membership Summary", align = "l")
 ```
-
 :::
 
 ::: {.callout-note title="2.6.1 Findings"}
-
 -   Movements and changes in membership since section 1.1.2:
     -   Mako moved from Maritime to Conservationist.
     -   Samantha Blake moved from the Suspicious Characters to Conservationist.
@@ -2353,7 +2318,6 @@ kable(grouped_members, caption = "Community Group Membership Summary", align = "
     -   Conservationist Group (Influential Node: Mako);
     -   Suspicious (Influential Nodes: Mrs. Money, Boss, The Middleman).
 -   We held back on the slightly less influential nodes such as: Hacklee Herald which was where Clepper Jensen worked as a journalist.
-
 :::
 
 ### 2.7 Discussion/ Interpretation:
@@ -2370,22 +2334,18 @@ We mainly focused on the conversations by 8 influential nodes and some related n
 
 -   `Hacklee Herald` (Comm. 5): Conversations between Clepper and his intern Miranda which ended on 11 Oct. Miranda mentioned an Oceanus City Council Member meeting with unmarked vessels at night.
 
+# Question 3
 
-
-# `Question 3`
-
-### `Question 3a)`
+### Question 3a)
 
 ### 3.1 Entities Breakdown
 
-:::{.callout-note title="Core Logic:"}
-
+::: {.callout-note title="Core Logic:"}
 -   If two names appear as sender and recipient in the same message, they cannot belong to the same person — i.e., they're not aliases of each other.
 
 -   If two names sent a message at the exact time, they cannot belong to the same person.
 
 We created Alluvial Diagrams to chart: real_identity → observed_name → community
-
 :::
 
 ::: panel-tabset
@@ -2466,7 +2426,6 @@ multi_members <- tibble::tibble(
 )
 
 ```
-
 :::
 
 ### Entities- Interactive Alluvial Diagrams
@@ -2535,22 +2494,21 @@ interactive_plot # This line will print the Plotly object in  Quarto output
 
 ```
 
-### `Question 3b)`
+### Question 3b)
 
 We created a graph with the character's original name, pseudonyms, and supplemented with any background information we learnt of. For instance, we learnt that Davis was a captain, or that Serenity was a private luxury yacht.Here, it is easier to determine who is using which pseudonyms by clicking on the real identity drop down panel which will then only segregate to the individual's Real Identity, Observed Name, and Community.
 
-### `Question 3c)`
+### Question 3c)
 
 Understanding pseudonyms significantly reshapes our interpretation of the events in Oceanus. Without resolving aliases, the communication network appears fragmented — it may seem like dozens of separate individuals are involved. However, by mapping pseudonyms to real identities, we discover that a small number of actors are coordinating more activity than initially apparent. For example, a person using multiple pseudonyms may appear in many places at once — suggesting high influence or deception. This reveals orchestrated behavior, such as coordinated logistics, manipulation of event timelines, or masking involvement in controversial operations.
 
-# `Question 4`
+# Question 4
 
-### `Question 4a)`
+### Question 4a)
 
 ### 4.1 Nadia's Ego Network- Louvain community
 
 ::: panel-tabset
-
 ## Ego Network
 
 ```{r, echo=FALSE}
@@ -2594,7 +2552,7 @@ ggraph(nadia_ego_graph, layout = "fr") +
 
 ## The Code
 
-``` {r}
+```{r}
 #| echo: true 
 #| eval: false
 set.seed(1234)
@@ -2634,23 +2592,19 @@ ggraph(nadia_ego_graph, layout = "fr") +
     size = "PageRank"
   )
 ```
-
 :::
 
-::: {.callout-note}
-
+::: callout-note
 -   We wanted to find out if there were sub communities within Nadia's direct network that worked closely together.
 -   The orange community were possibly involved in Sailor Shifts's music video, while the green community were likely regarding ensuring compliance to authorities such as officials, the harbour and conservation team.
 -   Nadia, Elise, and Marlin were the orange nodes that directly linked to the green nodes.
-
 :::
 
 ### 4.2 Nadia's Sent and Received Ego Networks- VizNetwork
 
 ### 4.2.1 Data Preparation
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ## Preparation- Nodes & Edges
 
 ```{r, echo=FALSE}
@@ -2887,7 +2841,7 @@ print("---------------------------------------------------------------------")
 
 ## The Code
 
-``` {r}
+```{r}
 #| echo: true
 #| eval: false
 # --- 2. Clean and Prepare Nodes ---
@@ -3120,7 +3074,6 @@ print("--- Checking: Number of nodes and edges in Nadia's Ego Network Graph ---"
 print(paste("Nodes:", gorder(nadia_ego_network_graph), "Edges:", gsize(nadia_ego_network_graph)))
 print("---------------------------------------------------------------------")
 ```
-
 :::
 
 ### 4.2.2 Nadia's Sent and Received Ego Networks
@@ -3218,7 +3171,6 @@ build_visnetwork_plot <- function(edge_df, title_label) {
 # Build and show visNetwork plots
 build_visnetwork_plot(edges_sent, "Nadia Sent Ego Network")
 ```
-
 :::
 
 ```{r}
@@ -3329,7 +3281,6 @@ build_visnetwork_plot(edges_received, "Nadia Received Ego Network")
 ```
 
 ::: {.callout-note title="4.2.3 Findings"}
-
 We then wanted to find more about the correspondences. The first graph illustrated Nadia's sent communications and the second graph were her received communications. Hover over nodes to see the sent or received count from the perspective of the entity. Hover over arrowheads to see the number, direction, count, first and last correspondence time, type of sent or received, and content of one communication. Nadia sent only 8 but received 18 communications (possibly indicative of using a pseudonym):
 
 -   Nodes involved: Nadia, Davis, Elise, Haacklee Habor, Liam, Marlin, Neptune, Oceanus City Council, Remora, Rodriguez, Sailor Shifts Team, Sentinel, V. Miesel Shipping.
@@ -3339,7 +3290,6 @@ We then wanted to find more about the correspondences. The first graph illustrat
 -   Received more from Davis (5), Elise (3), and Liam (2), relative to others.
 
 -   The next step would be to find out the suspicious characters/ activities.
-
 :::
 
 ### 4.3 Nadia's Ego Network: 3-hops degree centrality
@@ -3637,16 +3587,14 @@ net
 ```
 
 ::: {.callout-note title="4.3.1 Findings"}
-
 -   Nodes from 1-hop: Nadia, Davis, Elise, Haacklee Habor, Liam, Marlin, Neptune, Oceanus City Council, Remora, Rodriguez, Sailor Shifts Team, Sentinel, V. Miesel Shipping.
 
 -   Additional nodes from 3-hop: Conservation vessels, EcoVigil, Sam, The Accountant, Mako, Nemo Reef.
 
 -   We would then use these 3-hop nodes to drill in deeper to find suspicious relationships between nodes.
-
 :::
 
-### `Question 4b)`
+### Question 4b)
 
 ### 4.4 Summary of Nadia's Actions
 
@@ -3748,7 +3696,7 @@ print(unique_ids)
 
 ## The Code
 
-``` {r}
+```{r}
 #| echo: true
 #| eval: false
 # Extract Nadia Conti's 3-hop ego network
@@ -3841,7 +3789,6 @@ suspicious_links <- nadia_ego_comm_df_3hop %>%
 unique_ids <- unique(c(suspicious_links$sender_id, suspicious_links$recipient_id))
 print(unique_ids)
 ```
-
 :::
 
 -   Elise, EcoVigil, Elise, Davis, Liam, Mako, Neptune, Sam, Remora, Rodriguez, Sailor Shifts Team, Sentinel, The Accountant, Oceanus City Council, V. Miesel Shipping possibly found something suspicious or were involved in something suspicious.
@@ -4440,4 +4387,3 @@ ggplotly(p, tooltip = "text")
 |                                                                                                                              |                                                                                                                                                                                                                                                                                                                                          |
 | (Id 979)                                                                                                                     |                                                                                                                                                                                                                                                                                                                                          |
 +------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-

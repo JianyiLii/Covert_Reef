@@ -1,0 +1,10 @@
+---
+title: "🌊 Project Poster 🪸"
+format:
+  html:
+    mermaid: 
+      theme: default
+---
+```{r echo=FALSE, out.width="100%"}
+knitr::include_graphics("images/Covert_reef_Group2.jpg")
+```
