@@ -1,10 +1,18 @@
 ---
-title: "🌊 Project Poster 🪸"
+title: "🌊 `Project Poster` 🪸"
 format:
   html:
     mermaid: 
       theme: default
+    about: 
+      template: jolla
+      links:
+        - icon: download
+          text: Download Poster
+          href: "https://drive.google.com/file/d/1f5e3MId31hk7QUnvfwGRMmFfJv4bxu60/view?usp=sharing"
+          target: _blank
 ---
+
 ```{r echo=FALSE, out.width="100%"}
 knitr::include_graphics("images/Covert_reef_Group2.jpg")
 ```

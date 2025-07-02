@@ -26,19 +26,20 @@ website:
       - text: "{{< fa laptop-code >}} Shiny App"
         menu:
         - href: user_guide.qmd
-          text: User Guide
+          text: 🌊  User Guide  🪸
         - href: "https://jianyivaa.shinyapps.io/Shiny_CovertReef/"
-          text: Shiny App
+          text: 🌊  Shiny App  🪸
           target: _blank
       - icon: github
         text: Github
         menu: 
         - href: "https://github.com/JianyiLii/Group_Project-MC3"
-          text: Project
+          text: 🌊  Project  🪸
           target: _blank
         - href: "https://github.com/JianyiLii/Shiny_CovertReef"
-          text: Shiny
+          text: 🌊  Shiny  🪸
           target: _blank
+          
 format:
   html:
     theme: journal

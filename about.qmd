@@ -2,18 +2,17 @@
 title: "🌊 `Covert Reef Team Members` 🪸"
 format: 
   html:
-    allow-html: true
     mermaid: 
       theme: default
-      
-about:
-  template: jolla
-  links:
-    - icon: globe
-      text: Shiny
-      href: ""
-    - icon: github
-      text: GitHub
+    about:
+      template: jolla
+      links:
+        - href: "https://jianyivaa.shinyapps.io/Shiny_CovertReef/"
+          icon: globe
+          text: Shiny
+        - href: "https://github.com/JianyiLii/Covert_Reef"
+          icon: github
+          text: GitHub
 ---
 
 ::: panel-tabset
@@ -22,7 +21,7 @@ about:
 Write something!!!!
 
 ::: {.callout-note title="Yang Lu"}
-Please feel free to click on my LinkedIn and GitHub links for more info! <br> [<i class="fa-brands fa-linkedin"></i> Linkedin]()  \|  [<i class="fa-brands fa-github"></i> GitHub]()
+Please feel free to click on my LinkedIn and GitHub links for more info! <br> [<i class="fa-brands fa-linkedin"></i> Linkedin]()  \|  [<i class="fa-brands fa-github"></i> GitHub](https://github.com/Roxy-97)
 :::
 
 ## Audrey Tan
@@ -30,7 +29,7 @@ Please feel free to click on my LinkedIn and GitHub links for more info! <br> [<
 Write something!!!!
 
 ::: {.callout-note title="Audrey"}
-Please feel free to click on my LinkedIn and GitHub links for more info! <br> [<i class="fa-brands fa-linkedin"></i> Linkedin]()  \|  [<i class="fa-brands fa-github"></i> GitHub]()
+Please feel free to click on my LinkedIn and GitHub links for more info! <br> [<i class="fa-brands fa-linkedin"></i> Linkedin]()  \|  [<i class="fa-brands fa-github"></i> GitHub](https://github.com/dreytwy)
 :::
 
 ## Li Jianyi
@@ -38,6 +37,6 @@ Please feel free to click on my LinkedIn and GitHub links for more info! <br> [<
 My name is Jianyi, and I came into the Visual Analytics module hoping to learn how to turn complex data into clear and engaging visuals. The module exceeded my expectations by equipping me with practical skills in R, Shiny, and Quarto, while also teaching me the importance of design, storytelling, and user experience in data communication. I especially enjoyed building interactive dashboards and applying visual thinking to real-world scenarios. I believe these skills will be valuable in future projects, business reporting, and communicating insights to both technical and non-technical audiences.
 
 ::: {.callout-note title="Jianyi"}
-Please feel free to click on my LinkedIn and GitHub links for more info! <br> [<i class="fa-brands fa-linkedin"></i> Linkedin]()  \|  [<i class="fa-brands fa-github"></i> GitHub]()
+Please feel free to click on my LinkedIn and GitHub links for more info! <br> [<i class="fa-brands fa-linkedin"></i> Linkedin]()  \|  [<i class="fa-brands fa-github"></i> GitHub](https://github.com/JianyiLii)
 :::
 :::

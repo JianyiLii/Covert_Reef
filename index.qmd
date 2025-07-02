@@ -1,5 +1,9 @@
 ---
-title: "`Covert Reef`"
-format:
-  html
+title: "🌊 `Covert Reef` 🪸"
+format: 
+  html:
+    mermaid: 
+      theme: default
+    about: jolla
+    
 ---
