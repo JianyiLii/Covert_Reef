@@ -10,9 +10,11 @@ format:
         - href: "https://jianyivaa.shinyapps.io/Shiny_CovertReef/"
           icon: globe
           text: Shiny
+          target: _blank
         - href: "https://github.com/JianyiLii/Covert_Reef"
           icon: github
           text: GitHub
+          target: _blank
 ---
 
 ::: panel-tabset
