@@ -17,13 +17,15 @@ format:
           target: _blank
 ---
 
-::: panel-tabset
+:::::: panel-tabset
 ## Yang Lu
 
-Write something!!!!
+My name is Yang Lu, and I’m currently pursuing a Master at Singapore Management University, specializing in the Financial Technology& Analytics track. 
+In this Visual Analytics and Applications course, I focus on harnessing the power of RStudio to transform complex financial datasets into clear, actionable insights. My work includes data wrangling with **tidyverse**, creating interactive visualizations with **ggplot2** and **plotly**, and building dashboards using **shiny**. I am passionate about applying these skills to real-world fintech challenges and continuously learning new tools and techniques to advance my analytical toolkit.
+
 
 ::: {.callout-note title="Yang Lu"}
-Please feel free to click on my LinkedIn and GitHub links for more info! <br> [<i class="fa-brands fa-linkedin"></i> Linkedin]()  \|  [<i class="fa-brands fa-github"></i> GitHub](https://github.com/Roxy-97)
+Please feel free to click on my LinkedIn and GitHub links for more info! <br> [<i class="fa-brands fa-linkedin"></i> Linkedin](https://www.linkedin.com/in/yanglu97/)  \|  [<i class="fa-brands fa-github"></i> GitHub](https://github.com/Roxy-97)
 :::
 
 ## Audrey Tan
@@ -41,4 +43,4 @@ My name is Jianyi, and I came into the Visual Analytics module hoping to learn h
 ::: {.callout-note title="Jianyi"}
 Please feel free to click on my LinkedIn and GitHub links for more info! <br> [<i class="fa-brands fa-linkedin"></i> Linkedin]()  \|  [<i class="fa-brands fa-github"></i> GitHub](https://github.com/JianyiLii)
 :::
-:::
+::::::

@@ -1,5 +1,5 @@
 ---
-title: "🌊 `Data Preparation` 🪸"
+title: "🌊 Data Preparation 🪸"
 format:
   html:
     mermaid: 

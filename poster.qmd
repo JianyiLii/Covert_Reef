@@ -1,5 +1,5 @@
 ---
-title: "🌊 `Project Poster` 🪸"
+title: "🌊 Project Poster 🪸"
 format:
   html:
     mermaid: 
