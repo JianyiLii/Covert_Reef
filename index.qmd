@@ -1,5 +1,5 @@
 ---
-title: "🌊 `Covert Reef` 🪸"
+title: "🌊 `Welcome to Covert Reef` 🪸"
 format: 
   html:
     mermaid: 
@@ -7,3 +7,13 @@ format:
     about: jolla
     
 ---
+🪸 Uncovering Hidden Networks Through Visual Analytics 🪸
+
+```{r echo=FALSE, out.width="100%"}
+knitr::include_graphics("images/coralreef.avif")
+```
+
+🕵️ About the Project
+Covert Reef is our visual analytics investigation for the 2025 VAST Challenge Mini-Challenge 3 (MC3). This challenge simulates a fictional crisis scenario in the Oceanus, where intelligence suggests the involvement of covert networks.
+
+Our team dives into large-scale communication logs to explore hidden patterns of interaction. Using R, Shiny, and advanced data visualisation techniques, we identify key actors, map suspicious activities, and expose potential malicious plots.

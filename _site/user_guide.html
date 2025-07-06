@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>🌊 Welcome to Covert Reef 🪸 – {{&lt; fa water &gt;}} Covert Reef 🪸</title>
+<title>🌊 User Guide 🪸 – {{&lt; fa water &gt;}} Covert Reef 🪸</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -73,7 +73,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -174,31 +174,499 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">1. Introduction</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">2. Background</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">3. Setup</a></li>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">4. Data Preparation</a></li>
+  <li><a href="#exploratory" id="toc-exploratory" class="nav-link" data-scroll-target="#exploratory">5. Exploratory</a></li>
+  <li><a href="#question-1-communication-analysis" id="toc-question-1-communication-analysis" class="nav-link" data-scroll-target="#question-1-communication-analysis">6. Question 1: Communication Analysis</a></li>
+  <li><a href="#question-2-topic-clustering-network-exploration" id="toc-question-2-topic-clustering-network-exploration" class="nav-link" data-scroll-target="#question-2-topic-clustering-network-exploration">7. Question 2: Topic Clustering &amp; Network Exploration</a></li>
+  <li><a href="#question-3-pseudonym-mapping-real-vs-observed-identities" id="toc-question-3-pseudonym-mapping-real-vs-observed-identities" class="nav-link" data-scroll-target="#question-3-pseudonym-mapping-real-vs-observed-identities">8. Question 3: Pseudonym Mapping: Real vs Observed Identities</a></li>
+  <li><a href="#question-4-nadia-centric-analysis" id="toc-question-4-nadia-centric-analysis" class="nav-link" data-scroll-target="#question-4-nadia-centric-analysis">9. Question 4: Nadia-Centric Analysis</a></li>
+  <li><a href="#visit-vast-challenge" id="toc-visit-vast-challenge" class="nav-link" data-scroll-target="#visit-vast-challenge">10. Visit Vast Challenge</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<div class="quarto-about-jolla">
- <header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-about-solana column-body">
+  <div class="about-entity">
+    <div class="entity-contents">
+      <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">🌊 <code>Welcome to Covert Reef</code> 🪸</h1>
+<h1 class="title">🌊 <code>User Guide</code> 🪸</h1>
 </div>
 <div class="quarto-title-meta">
   </div>
-</header><main class="content" id="quarto-document-content">
-<p>🪸 Uncovering Hidden Networks Through Visual Analytics 🪸</p>
+</header> <div class="about-links">
+  <a href="https://drive.google.com/file/d/1DSA49gijZd0u2quPw1XP6OeNvzrnUWAV/view?usp=sharing" class="about-link" rel="" target="_blank">
+    <i class="bi bi-download"></i>
+     <span class="about-link-text">Download User_Guide</span>
+  </a>
+</div>
+      <div class="about-contents"><main class="content" id="quarto-document-content">
+
+<section id="introduction" class="level1">
+<h1>1. Introduction</h1>
+<ul>
+<li><p><strong>Accessing the site:</strong> <a href="https://dreytyw.shinyapps.io/VastChallengeCovertReef/">https://dreytyw.shinyapps.io/VastChallengeCovertReef/</a></p></li>
+<li><p><strong>Purpose &amp; scope:</strong> Explain that <em>Covert Reef</em> was created to answer questions in Vast 2025 Challenge.</p></li>
+<li><p><strong>Navigation overview:</strong> Users are told to navigate with the sidebar. It has modules named: Introduction, Background, Setup, Data Preparation, Exploratory, Question1, Question2, Question3, Question4, Visit Vast Challenge.</p></li>
+<li><p><strong>Thematic Overview:</strong> Prepare users on overview of words that will be in the story through a Wordcloud.</p></li>
+</ul>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="images/coralreef.avif" class="img-fluid figure-img" style="width:100.0%"></p>
+<p><img src="images/1.png" class="img-fluid figure-img" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>🕵️ About the Project Covert Reef is our visual analytics investigation for the 2025 VAST Challenge Mini-Challenge 3 (MC3). This challenge simulates a fictional crisis scenario in the Oceanus, where intelligence suggests the involvement of covert networks.</p>
-<p>Our team dives into large-scale communication logs to explore hidden patterns of interaction. Using R, Shiny, and advanced data visualisation techniques, we identify key actors, map suspicious activities, and expose potential malicious plots.</p>
+</section>
+<section id="background" class="level1">
+<h1>2. Background</h1>
+<ul>
+<li><p><strong>Introduction to Final Product Tab:</strong> Introduces users to the reason the website was created for the Vast Challenge. Provides Background of MC3.</p></li>
+<li><p><strong>Questions Tab:</strong> Provides users with questions posted on MC3.</p></li>
+<li><p><strong>Data Tab:</strong> Provides users with the general dataset information used for VAST Challenge.</p></li>
+<li><p><strong>Methodology:</strong> Users informed about the general use of methodologies and graphs.</p></li>
+</ul>
+</section>
+<section id="setup" class="level1">
+<h1>3. Setup</h1>
+<ul>
+<li><p><strong>Yellow Boxes:</strong></p>
+<ul>
+<li><p><strong>Package checklist:</strong> Specified R CRAN supported packages utilized.</p></li>
+<li><p><strong>Code to load packages:</strong> Specified using pacman to check and load packages.</p></li>
+<li><p><strong>Workarounds:</strong> Specified that <code>magick</code> and <code>wordcloud2</code> may have compatibility or rendering issues within Shiny apps, so using <code>renderImage()</code>/<code>imageOutput()</code> and <code>renderWordcloud2()</code>/<code>wordcloud2Output()</code> ensures smoother, more reliable image and interactive word cloud rendering inside Shiny’s reactive framework.</p></li>
+</ul></li>
+<li><p><strong>Green Boxes:</strong></p>
+<ul>
+<li><p><strong>Loading Data:</strong> Code chunk used from <code>jsonlite</code> package to import.</p></li>
+<li><p><strong>Defining common variables:</strong> User informed that styles and colours were kept as consistent as possible.</p></li>
+<li><p><strong>Inspecting Knowledge Graph Structure:</strong> Users informed that structure of the knowledge graph was first inspected.</p></li>
+<li><p><strong>Extracting Edges and Nodes Table:</strong> Structured JSON files provided in the VAST Challenge 2025 dataset:</p>
+<ul>
+<li><code>mc3_nodes.json</code>: Contains all entities (People, Vessels, Organizations, Groups, etc.)</li>
+<li><code>mc3_edges.json</code>: Communication links between entities (Sent, Received, Involved in, etc.)</li>
+<li>Users informed that <code>as_tibble()</code> was used to extract nodes and edges from the raw mc3_data.</li>
+</ul></li>
+<li><p><strong>Nodes Structure:</strong> Users informed that Exploratory summary of nodes data using <code>SmartEDA::ExpData()</code>.</p></li>
+<li><p><strong>Edges Structure:</strong> Users informed that Exploratory summary of edges data using <code>SmartEDA::ExpData()</code>.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="data-preparation" class="level1">
+<h1>4. Data Preparation</h1>
+<ol type="a">
+<li><p><strong>Nodes cleaning:</strong></p>
+<ul>
+<li>Users informed of the summary of steps applied.</li>
+</ul></li>
+<li><p><strong>Edges cleaning:</strong></p>
+<ul>
+<li>Users informed of the summary of steps applied.</li>
+</ul></li>
+<li><p><strong>Communication Extraction:</strong></p>
+<ul>
+<li>Users informed of the logic applied to extract communication data.</li>
+</ul></li>
+</ol>
+</section>
+<section id="exploratory" class="level1">
+<h1>5. Exploratory</h1>
+<ul>
+<li><p><strong>Node-Level EDA:</strong> Users can click the tab to view the overview, distribution of Node Type, Node SubType and, Observations by Node Type.</p></li>
+<li><p><strong>Edge-Level EDA:</strong> Users can click the tab to view the edge attribute overview.</p></li>
+<li><p><strong>Further Insights:</strong> Users can click to see the insight and course of action taken by the team after data understanding from exploring the nodes and edges and other available data.</p></li>
+<li><p><strong>Knowledge Graph:</strong></p>
+<ul>
+<li>Users can hover over the info icon to learn what to do.</li>
+<li>This is the view by hovering over the Information Icon</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/2.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Users can click the drop-down menu to select the unique node, and the interactive knowledge graph will respond to display the direct connections to other nodes. Then users can hover over the stars to read details like communicated content. Using the drop-down menu:</p>
+<ul>
+<li>Click any unique node like Nadia Conti and view the direct nodes.</li>
+<li>Hover over the stars to read the details.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/3.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="question-1-communication-analysis" class="level1">
+<h1>6. Question 1: Communication Analysis</h1>
+<ol type="a">
+<li><p><strong>Timeline Table</strong></p>
+<p>This shows overall communications.</p>
+<p><strong>Widget that filters the Timeline Table</strong></p>
+<ul>
+<li>Use the date range to select time.</li>
+<li>Filter by entity type (Person, Vessel, etc).</li>
+<li>Narrow down by sender or recipient.</li>
+<li>Reset to clear all selections.</li>
+</ul></li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/4.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="2" type="a">
+<li><p><strong>Communication Heatmap (All Time) Tab</strong></p>
+<p><strong>Heatmap:</strong></p>
+<ul>
+<li>Hover over to see counts.</li>
+</ul>
+<p><strong>Widget:</strong></p>
+<ul>
+<li>Select entity from drop-down.</li>
+<li>Table shows who this entity communicated with most</li>
+<li>Includes number of messages and contact subtypes.</li>
+</ul></li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/5.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="3" type="a">
+<li><p><strong>Week 1 vs Week 2 Communication Patterns:</strong></p>
+<p>Explain fluctuations between weeks by all or some entities.</p>
+<ul>
+<li>Use the dropdown menu to select one or multiple group(s) (Person, Vessel, etc) to be included into the plot.</li>
+<li>Deselecting all will hide data for that type.</li>
+</ul></li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/6.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="4" type="a">
+<li><p><strong>Time Filtered Chord Diagram, Timeline Table, and Static Heatmap by Time:</strong></p>
+<ul>
+<li>Use the drop-down to choose an hourly window</li>
+<li>Chord Diagram and timeline will update based on this hour</li>
+<li>Hover over heatmap to explore message volume by hour/date.</li>
+</ul></li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/7.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Findings shown here, can be collapsed to view the next Timeline Table.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/8.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Heatmap is static and not dynamic, as it shows an overview. The weekly dynamic timeline and other dynamic charts already captured similar information.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/9.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2-topic-clustering-network-exploration" class="level1">
+<h1>7. Question 2: Topic Clustering &amp; Network Exploration</h1>
+<ol start="5" type="a">
+<li><p><strong>Person-Vessel Timeline Tab</strong></p>
+<ul>
+<li>Filter Person and Vessel Entities Widget.</li>
+<li>Hover over the icon to get information.</li>
+<li>Use dropdown to select one of more people and/or vessels.</li>
+<li>Use the radio buttons to choose whether to match as sender, recipient or either.</li>
+<li>Use the buttons on the right to:
+<ul>
+<li>Select all People</li>
+<li>Select all Vessels</li>
+<li>Reset all filters</li>
+</ul></li>
+</ul>
+<p>This is the widget:</p></li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/10.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This shows the Timeline of Communication Between Persons and Vessels and Timeline Table will be filtered by the selection.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/11.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Within Timeline Table:
+<ul>
+<li>Table headers can be sorted in ascending or descending order.</li>
+<li>Search bar allows keyword searches.</li>
+<li>The timeline of Communication Between Persons and Vessels and Timeline Table will be filtered by the selection from widget or within its own table.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/12.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Louvain Network Analysis Tab (All Static Graphs):</strong></p>
+<ul>
+<li><strong>Network Graph:</strong> Static Louvain Communities and PageRank Centrality graph for user’s understanding.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/13.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Top 10 Nodes by Centrality (PageRank, Degree, etc.):</strong> For users to understand who are the gatekeepers, high connection nodes, influential nodes, etc.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/14.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Key Findings and Interpretation:</strong> For user to read the key findings.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/15.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Wordclouds by Community:</strong> For users to understand the top words communicated within each community.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/16.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Top Bigrams per Community (Circular Plot):</strong> For users to understand the frequency of the top words communicated per community.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/17.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Community Summary Table:</strong> To answer the question on the topic area per group and also understand the membership and group name.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/18.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Key Findings and Interpretations:</strong> For users to understand the further insights per community gathered from the community membership and timeline table conversations.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/19.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="question-3-pseudonym-mapping-real-vs-observed-identities" class="level1">
+<h1>8. Question 3: Pseudonym Mapping: Real vs Observed Identities</h1>
+<p><strong>Tabs for 3a) to 3c):</strong> Explanation and answering of questions in MC3.</p>
+<p><strong>Identity Flow Viewer:</strong></p>
+<ul>
+<li><p>Describe alias-mapping logic (time co-occurrence rules).</p>
+<ul>
+<li>This shows how real names map to observed pseudonyms and communities in alluvial diagrams.</li>
+</ul></li>
+<li><p>Click on the dropdown menu to view the real name -&gt; observed name in the communications -&gt; community they belong to.</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/20.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Example of an individual:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/21.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="question-4-nadia-centric-analysis" class="level1">
+<h1>9. Question 4: Nadia-Centric Analysis</h1>
+<p><strong>Ego Networks: Louvain Ego Network (graph):</strong> To view any communities to gain an understanding of possible illicit activity across people.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/22.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Ego Networks: Directed Ego Networks (visNetwork):</strong> Click the drop-down menu to filter by node.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/23.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/24.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Widget to Filter Suspicious Entities:</strong></p>
+<ul>
+<li>Use the dropdown to select suspicious entities for filtering the 3-Hop Timeline and the Communications Table.</li>
+<li>Show: To control if you want to see all, only suspicious, or non-suspicious communications.</li>
+<li>Filter by role: Sender, recipient, or either.</li>
+<li>Use the buttons on the right to select all people, vessels, organisations, groups, or locations.</li>
+<li>Click ‘Reset’ to clear your filters.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/25.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This is the Communication Table which will also be filtered:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/26.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Keyword Query Timeline:</strong></p>
+<ul>
+<li>Click one keyword to show the timeline of messages mentioned with it.</li>
+<li>This will update the keyword timeline plot and filter the communications table below.</li>
+<li>Useful for quickly finding patterns of conversations by day and time tied to specific terms like 1045, Permit.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/27.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="visit-vast-challenge" class="level1">
+<h1>10. Visit Vast Challenge</h1>
+<p>Users can click on the module, and it will lead them to the VAST challenge website.</p>
 
 
-</main>  
+</section>
+</main></div>
+    </div>
+  </div>
 </div>
  <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
