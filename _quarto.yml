@@ -27,7 +27,7 @@ website:
         menu:
         - href: user_guide.qmd
           text: 🌊  User Guide  🪸
-        - href: "https://jianyivaa.shinyapps.io/Shiny_CovertReef/"
+        - href: "https://dreytwy.shinyapps.io/VastChallengeCovertReef/"
           text: 🌊  Shiny App  🪸
           target: _blank
       - icon: github

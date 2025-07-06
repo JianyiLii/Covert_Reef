@@ -7,7 +7,7 @@ format:
     about:
       template: jolla
       links:
-        - href: "https://jianyivaa.shinyapps.io/Shiny_CovertReef/"
+        - href: "https://dreytwy.shinyapps.io/VastChallengeCovertReef/"
           icon: globe
           text: Shiny
           target: _blank
