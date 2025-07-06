@@ -1531,7 +1531,7 @@ This shift suggests that while the first week’s communications were more focus
 
 ### 2.1 Unique count from each sender subtype
 
-:::: panel-tabset
+::: panel-tabset
 ## Unique Count
 
 ```{r, echo=FALSE}
@@ -1567,7 +1567,7 @@ print(sender_names_by_type)
 ::: callout-note
 There were no Group sub-type as confirmed by this filtered table.
 :::
-::::
+:::
 
 ## 2.2 People and Vessels
 
