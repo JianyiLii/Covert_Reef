@@ -1412,6 +1412,14 @@ ggplot(heatmap_data, aes(x = hour, y = date, fill = n)) +
 ```
 :::
 
+::: {.callout-important title="1.4 Findings"}
+-   All activity is between 7 AM and 2 PM, with a sharp rise from 8 AM, peaking 9–12 PM, then tapering off.
+
+-   The single biggest spike is Oct 5 at 10 AM (\>20 messages).
+
+-   Every day follows the same mid-morning “bell curve” with virtually zero messages outside those hours.
+:::
+
 ### 1.5 Hourly Communication Patterns: Week 1 vs Week 2
 
 ::: panel-tabset
@@ -1515,7 +1523,7 @@ ggplot(week_patterns, aes(x = hour, y = proportion, color = week)) +
 ```
 :::
 
-::: {.callout-note title="Findings"}
+::: {.callout-note title="1.5 Findings"}
 The visualization of hourly communication patterns reveals that message activity in Oceanus follows a pronounced daily cycle, with distinct peaks and lows across both observed weeks.
 
 In Week 1, communication is highly concentrated in the morning hours, particularly between 8 AM and 12 PM, where a majority of the messages are exchanged.
@@ -1531,7 +1539,7 @@ This shift suggests that while the first week’s communications were more focus
 
 ### 2.1 Unique count from each sender subtype
 
-::: panel-tabset
+:::: panel-tabset
 ## Unique Count
 
 ```{r, echo=FALSE}
@@ -1567,7 +1575,7 @@ print(sender_names_by_type)
 ::: callout-note
 There were no Group sub-type as confirmed by this filtered table.
 :::
-:::
+::::
 
 ## 2.2 People and Vessels
 
